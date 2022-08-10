@@ -17,22 +17,22 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
-      - name: Get Pub
-        working-directory: flutter_application_1
-        run: flutter packages pub get
+      # - name: Get Pub
+      #   working-directory: flutter_application_1
+      #   run: flutter packages pub get
 
       # - name: Analyze
       #   working-directory: ./flutter_application_1
       #   run: flutter analyze
         
-      # - name: Testing Authentication Module
-      #   working-directory: ./flutter_application_1
-      #   run: flutter test --coverage
+      - name: Testing Authentication Module
+        working-directory: ./flutter_application_1
+        run: flutter test --coverage
 
-      # - name: Report Code Coverage for Testing Discovery Module
-      #   uses: zgosalvez/github-actions-report-lcov@v1
-      #   with:
-      #     coverage-files: coverage/lcov.*.info
-      #     minimum-coverage: 50
-      #     artifact-name: code-coverage-report-discovery-module
-      #     working-directory: ./flutter_application_1
+      - name: Report Code Coverage for Testing Discovery Module
+        uses: zgosalvez/github-actions-report-lcov@v1
+        with:
+          coverage-files: coverage/lcov.*.info
+          minimum-coverage: 50
+          artifact-name: code-coverage-report-discovery-module
+          working-directory: ./flutter_application_1

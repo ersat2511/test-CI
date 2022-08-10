@@ -18,15 +18,15 @@ jobs:
           flutter-version: "2.10.5"
 
       # - name: Get Pub
-      #   working-directory: flutter_application_1
+      #   working-directory: app
       #   run: flutter packages pub get
 
       # - name: Analyze
-      #   working-directory: ./flutter_application_1
+      #   working-directory: ./app
       #   run: flutter analyze
         
       - name: Testing Authentication Module
-        working-directory: ./flutter_application_1
+        working-directory: ./app
         run: flutter test --coverage
 
       - name: Report Code Coverage for Testing Discovery Module
@@ -35,4 +35,4 @@ jobs:
           coverage-files: coverage/lcov.*.info
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
-          working-directory: ./flutter_application_1
+          working-directory: ./app

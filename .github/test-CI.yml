@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  issue_comment:
+    types:
+      - created
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Testing Authentication Module
+        working-directory: ./flutter_application_1
+        run: flutter test --coverage
+
+      - name: Report Code Coverage for Testing Discovery Module
+        uses: zgosalvez/github-actions-report-lcov@v1
+        with:
+          coverage-files: coverage/lcov.*.info
+          minimum-coverage: 0
+          artifact-name: code-coverage-report-discovery-module
+          working-directory: ./flutter_application_1

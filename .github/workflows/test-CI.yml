@@ -41,6 +41,6 @@ jobs:
         uses: zgosalvez/github-actions-report-lcov@v1
         with:
           coverage-files: coverage/lcov.*.info
-          # minimum-coverage: 50
+          minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
           # working-directory: ./app/coverage

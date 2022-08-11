@@ -37,14 +37,14 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage
 
-      # - name: Download code coverage from GitHub
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: code-coverage
-      #     path: /app/coverage
+      - name: Download code coverage from GitHub
+        uses: actions/download-artifact@v3
+        with:
+          name: code-coverage
+          path: app/coverage
 
-      - name: check current location
-        run: pwd
+      # - name: check current location
+      #   run: pwd
 
       # - name: check current structure
       #   run: cd app && ls
@@ -55,4 +55,4 @@ jobs:
           coverage-files: lcov.info
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
-          working-directory: app/coverage
+          # working-directory: app/coverage

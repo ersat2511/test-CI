@@ -43,6 +43,12 @@ jobs:
       #     name: code-coverage
       #     path: /app/coverage
 
+      - name: check current location
+        run: pwd
+
+      - name: check current structure
+        run: ls
+
       - name: Report Code Coverage for Testing Discovery Module
         uses: zgosalvez/github-actions-report-lcov@v1
         with:

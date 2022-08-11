@@ -25,44 +25,16 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
-      # - name: Get Pub
-      #   working-directory: ./app
-      #   run: flutter packages pub get
-
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
 
-      - name: check current location
-        run: pwd
-
-      - name: Testing Authentication Module
+      - name: Testing
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      # - name: check current location
-      #   run: pwd
-
-      - name: check current structure
-        run: cd app 
-
-      - name: Upload code coverage to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage
-          path: ./app/coverage/lcov.info
-
-      - name: Download code coverage from GitHub
-        uses: actions/download-artifact@v3
-        with:
-          name: code-coverage
-          path: app/coverage
-
-      # - name: check current location
-      #   run: pwd
-
       # - name: check current structure
-      #   run: cd app && ls
+      #   run: cd app 
 
       - name: Report Code Coverage for Testing Discovery Module
         uses: zgosalvez/github-actions-report-lcov@v1.5.0
@@ -71,6 +43,3 @@ jobs:
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
           working-directory: ./app
-
-      - name: check current structure
-        run: ls && cd app && ls

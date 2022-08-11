@@ -45,7 +45,7 @@ jobs:
       - name: test
         shell: bash
         run: |
-          sh .github/scripts/get_coverage_percentagesh app/coverage/lcov.info
+          sh .github/scripts/get_coverage_percentage.sh app/coverage/lcov.info
 
       # - uses: actions-ecosystem/action-create-comment@v1
       #   with:

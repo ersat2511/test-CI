@@ -49,10 +49,10 @@ jobs:
       - name: check current structure
         run: cd app && ls
 
-      - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@v1
-        with:
-          coverage-files: lcov.info
-          minimum-coverage: 50
-          artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app/coverage
+      # - name: Report Code Coverage for Testing Discovery Module
+      #   uses: zgosalvez/github-actions-report-lcov@v1
+      #   with:
+      #     coverage-files: lcov.info
+      #     minimum-coverage: 50
+      #     artifact-name: code-coverage-report-discovery-module
+      #     working-directory: ./app/coverage

@@ -43,11 +43,14 @@ jobs:
       - name: check current location
         run: pwd
 
+      - name: check current structure
+        run: cd app && ls && cd ../
+
       - name: Upload code coverage to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage
-          path: code/coverage/lcov.${{ matrix.category }}.info
+          path: ./app/coverage/lcov.${{ matrix.category }}.info
 
       - name: Download code coverage from GitHub
         uses: actions/download-artifact@v3

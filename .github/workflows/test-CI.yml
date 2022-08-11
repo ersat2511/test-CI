@@ -40,11 +40,11 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      - name: check current location
-        run: pwd
+      # - name: check current location
+      #   run: pwd
 
       - name: check current structure
-        run: ls && cd app && ls && cd ../
+        run: cd app 
 
       - name: Upload code coverage to GitHub
         uses: actions/upload-artifact@v3
@@ -67,7 +67,7 @@ jobs:
       - name: Report Code Coverage for Testing Discovery Module
         uses: zgosalvez/github-actions-report-lcov@v1.5.0
         with:
-          coverage-files: app/coverage/lcov.info
+          coverage-files: [./app/coverage/lcov.info]
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
           # working-directory: ./app/coverage

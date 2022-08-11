@@ -41,11 +41,10 @@ jobs:
           artifact-name: code-coverage-report-discovery-module
           working-directory: ./app
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: test
-      shell: bash
-      run: |
-        sh .github/scripts/get_coverage_percentagesh app/coverage/lcov.info
+        shell: bash
+        run: |
+          sh .github/scripts/get_coverage_percentagesh app/coverage/lcov.info
 
       # - uses: actions-ecosystem/action-create-comment@v1
       #   with:

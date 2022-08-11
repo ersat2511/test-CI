@@ -42,7 +42,8 @@ jobs:
       #     working-directory: ./app
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      run: ls
+      - name: testing structure
+        run: ls
 
       # - name: test
       #   shell: bash

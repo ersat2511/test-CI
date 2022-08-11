@@ -70,4 +70,7 @@ jobs:
           coverage-files: lcov.info
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app/coverage
+          # working-directory: ./app/coverage
+
+      - name: check current structure
+        run: ls && cd app && ls

@@ -45,7 +45,7 @@ jobs:
         working-directory: ./app
         run: | 
           lcov --summary coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-          echo "UNITTESTCOVERAGE=$(cat GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
+          echo "UNITTESTCOVERAGE=$(cat $GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
           echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: Post jest coverage comments

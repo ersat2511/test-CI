@@ -44,7 +44,7 @@ jobs:
       - name: get summary
         run: |
         lcov --summary app/coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-        echo "UNITTESTCOVERAGE=$(cat $GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
+        echo UNITTESTCOVERAGE=$(cat $GITHUB_STEP_SUMMARY) >> $GITHUB_ENV
 
       - name: Post jest coverage comments
         env:
@@ -58,19 +58,3 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments \
             -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$UNITTESTCOVERAGE'\n"}'
-      
-      # - uses: actions/github-script@v6
-      #   id: set-summary
-      #   with:
-      #     script:
-      #     result-encoding: string
-
-      # - name: Get result
-      #   run: echo "${{steps.set-summary.outputs.result}}"
-
-      # - uses: actions-ecosystem/action-create-comment@v1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     body: |
-      #       Hello, @${{ github.actor }}!
-

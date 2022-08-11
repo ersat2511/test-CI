@@ -43,7 +43,7 @@ jobs:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: testing structure
-        run: ls -a && cd .github && ls -la
+        run: ls -a && cd .github/scripts && ls -a
 
       - name: test
         # shell: bash

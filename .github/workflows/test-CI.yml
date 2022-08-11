@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage
-          path: ./app/coverage/lcov.${{ matrix.category }}.info
+          path: ./app/coverage/lcov.info
 
       - name: Download code coverage from GitHub
         uses: actions/download-artifact@v3

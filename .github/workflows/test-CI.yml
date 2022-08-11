@@ -17,21 +17,21 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
+      # - uses: actions/setup-java@v1
+      #   with:
+      #     java-version: "12.x"
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "2.10.5"
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: "2.10.5"
 
-      - name: Analyze
-        working-directory: ./app
-        run: flutter analyze
+      # - name: Analyze
+      #   working-directory: ./app
+      #   run: flutter analyze
 
-      - name: Testing
-        working-directory: ./app
-        run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
+      # - name: Testing
+      #   working-directory: ./app
+      #   run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
       # - name: Report Code Coverage for Testing Discovery Module
       #   uses: zgosalvez/github-actions-report-lcov@v1.5.0

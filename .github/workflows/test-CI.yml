@@ -46,8 +46,8 @@ jobs:
       - name: check current location
         run: pwd
 
-      - name: check current structure
-        run: cd app && ls
+      # - name: check current structure
+      #   run: cd app && ls
 
       - name: Report Code Coverage for Testing Discovery Module
         uses: zgosalvez/github-actions-report-lcov@v1

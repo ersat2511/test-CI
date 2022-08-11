@@ -38,7 +38,7 @@ jobs:
 
       - name: Testing Authentication Module
         working-directory: ./app
-        run: flutter test --coverage --no-pub --coverage-path=./app/coverage/lcov.info
+        run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
       - name: check current location
         run: pwd

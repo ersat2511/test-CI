@@ -45,6 +45,9 @@ jobs:
 
       - name: Report Code Coverage for Testing Discovery Module
         uses: zgosalvez/github-actions-report-lcov@v1
+        run: '
+        pwd
+        '
         with:
           coverage-files: lcov.info
           minimum-coverage: 50

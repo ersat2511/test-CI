@@ -25,9 +25,9 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
-      - name: Get Pub
-        working-directory: ./app
-        run: flutter packages pub get
+      # - name: Get Pub
+      #   working-directory: ./app
+      #   run: flutter packages pub get
 
       - name: Analyze
         working-directory: ./app
@@ -44,7 +44,7 @@ jobs:
         run: pwd
 
       - name: check current structure
-        run: cd app && ls && cd ../
+        run: ls && cd app && ls && cd ../
 
       - name: Upload code coverage to GitHub
         uses: actions/upload-artifact@v3

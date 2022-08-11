@@ -46,7 +46,7 @@ jobs:
         run: ls -a && cd .github && ls -la
 
       - name: test
-        shell: bash
+        # shell: bash
         run: |
           sh .github/scripts/get_coverage_percentage.sh app/coverage/lcov.info
 

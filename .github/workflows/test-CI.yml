@@ -51,14 +51,13 @@ jobs:
           REPO: ${{ github.repository }}
           SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          echo "coverageSummary=$(lcov --summary ./app/coverage/lcov.info)"
+          coverageSummary=$(lcov --summary ./app/coverage/lcov.info)
           curl \
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments \
             -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$coverageSummary'\n"}'
-
 
       - name: get data from summary
         run: echo $coverageSummary

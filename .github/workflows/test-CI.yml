@@ -35,13 +35,8 @@ jobs:
 
       # - uses: actions/checkout@main
 
-      # - run: |
-      #     pwd
-      #     ls -a
-      #     echo $cwd
-
       - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@main
+        uses: ./.github/actions/github-actions-report-lcov
         with:
           coverage-files: ./app/coverage/lcov.info
           minimum-coverage: 50

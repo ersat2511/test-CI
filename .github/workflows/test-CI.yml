@@ -51,4 +51,4 @@ jobs:
 
       - name: get data from summary
         run: 
-          echo ${{ steps.coverage-summary.outputs.stdout }}
+          echo ${{ steps.coverage-summary.outputs[0] }}

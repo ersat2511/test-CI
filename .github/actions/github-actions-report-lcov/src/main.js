@@ -63,7 +63,7 @@ async function genhtml(coverageFiles, tmpPath) {
   const artifactPath = path.resolve(tmpPath, 'htmlxxx').trim();
   console.log(coverageFiles, '===asd=========asd====');
   const extractedCoverageFile = coverageFiles && coverageFiles !== '' ? coverageFiles : './app/coverage/lcov.info';
-  const args = [extractedCoverageFile , '--rc', 'lcov_branch_coverage=1'];
+  const args = ['./app/coverage/lcov.info' , '--rc', 'lcov_branch_coverage=1'];
 
   args.push('--output-directory');
   args.push(artifactPath);

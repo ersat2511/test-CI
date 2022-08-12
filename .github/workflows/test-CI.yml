@@ -47,8 +47,8 @@ jobs:
 
       - name: generate summary
         id: coverage-summary
-        run: lcov --summary ./app/coverage/lcov.info
+        run: coverageSummary=$(lcov --summary ./app/coverage/lcov.info)
 
       - name: get data from summary
         run: 
-          echo ${{ steps.coverage-summary.outputs[0] }}
+          echo $coverageSummary

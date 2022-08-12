@@ -38,7 +38,7 @@ jobs:
       - name: Report Code Coverage for Testing Discovery Module
         uses: ./.github/actions/github-actions-report-lcov
         with:
-          coverage-files: ./app/coverage/lcov.info 
+          coverage-files: "./app/coverage/lcov.info" 
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module 
           working-directory: ./app 

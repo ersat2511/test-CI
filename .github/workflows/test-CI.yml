@@ -25,9 +25,9 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
-      # - name: Analyze
-      #   working-directory: ./app
-      #   run: flutter analyze
+      - name: Analyze
+        working-directory: ./app
+        run: flutter analyze
 
       - name: Testing
         working-directory: ./app

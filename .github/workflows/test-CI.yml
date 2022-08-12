@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@main
 
       - name: Report Code Coverage for Testing Discovery Module
-        uses: ./.github/github-actions-report-lcov@main
+        uses: ./.github/actions/github-actions-report-lcov@main
         with:
           coverage-files: ./app/coverage/lcov.info
           minimum-coverage: 50

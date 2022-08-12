@@ -34,7 +34,7 @@ jobs:
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
       - name: Report Code Coverage for Testing Discovery Module
-        uses: .github/github-actions-report-lcov
+        uses: ./.github/github-actions-report-lcov
         with:
           coverage-files: ./app/coverage/lcov.info
           minimum-coverage: 50

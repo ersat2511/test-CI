@@ -53,9 +53,3 @@ jobs:
       #     artifact-name: code-coverage-report-discovery-module
       #     working-directory: ./app
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      generate textnya
-
-      textnya
-
-

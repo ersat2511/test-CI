@@ -33,6 +33,8 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
+      - uses: actions/checkout@main
+
       - name: Report Code Coverage for Testing Discovery Module
         uses: ./.github/github-actions-report-lcov@main
         with:

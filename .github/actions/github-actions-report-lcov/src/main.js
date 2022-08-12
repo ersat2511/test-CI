@@ -66,6 +66,8 @@ async function genhtml(coverageFiles, tmpPath) {
   args.push('--output-directory');
   args.push(artifactPath);
 
+  console.log(coverageFiles);
+
   await exec.exec('genhtml', args, { cwd: workingDirectory });
 
   if (artifactName !== '') {

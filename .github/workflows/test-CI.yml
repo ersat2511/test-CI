@@ -41,24 +41,5 @@ jobs:
           coverage-files: ./app/coverage/lcov.info
           minimum-coverage: 50
           artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app
-
-      - name: get summary
-        working-directory: ./app
-        run: |
-          lcov --summary coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-          echo "UNITTESTCOVERAGE=$(cat $GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-      - name: Post jest coverage comments
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
-          SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/$REPO/pull/$PR_NUMBER/comments \
-            -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$UNITTESTCOVERAGE'\n"}'
+          # working-directory: app
+          github-token: ${{ secrets.GITHUB_TOKEN }}

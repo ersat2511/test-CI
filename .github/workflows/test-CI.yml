@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
+    if: ${{ (.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
@@ -34,7 +34,7 @@ jobs:
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
       - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@v1.5.0
+        uses: .github/github-actions-report-lcov
         with:
           coverage-files: ./app/coverage/lcov.info
           minimum-coverage: 50
@@ -43,7 +43,7 @@ jobs:
 
       - name: get summary
         working-directory: ./app
-        run: | 
+        run: |
           lcov --summary coverage/lcov.info >> $GITHUB_STEP_SUMMARY
           echo "UNITTESTCOVERAGE=$(cat $GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
           echo "" >> $GITHUB_STEP_SUMMARY

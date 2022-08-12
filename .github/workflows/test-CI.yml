@@ -35,6 +35,11 @@ jobs:
 
       - uses: actions/checkout@main
 
+      - run: |
+          pwd
+          ls -a
+          echo $cwd
+
       - name: Report Code Coverage for Testing Discovery Module
         uses: ./.github/actions/github-actions-report-lcov
         with:

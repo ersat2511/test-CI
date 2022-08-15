@@ -68,7 +68,7 @@ jobs:
 
       - name: get summary coverage
         run: |
-          lcov --summary ./app/coverage/lcov.info >> $GITHUB_STEP_SUMMARY
+          lcov --summary ./app/coverage/lcov.info | readarray -t ARRAY < input.txt; IFS='\n'; echo "${ARRAY[*]}">> $GITHUB_STEP_SUMMARY
           echo "COVERAGE_SUMMARY=$(cat $GITHUB_STEP_SUMMARY)" >> $GITHUB_ENV
           echo "" >> $GITHUB_STEP_SUMMARY
 

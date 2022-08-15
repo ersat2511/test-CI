@@ -34,7 +34,7 @@ jobs:
           node-version: '12.x'
 
       - name: Install node dependencies
-        working-directory: ./.github/actions/github-actions-report-lcov
+        working-directory: .github/actions/github-actions-report-lcov
         run: npm install
 
       - name: Analyze

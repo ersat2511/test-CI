@@ -74,4 +74,4 @@ jobs:
 
       - name: get summary report
         run: |
-          echo "${{ env.coverage_summary }}"
+          echo "${{ env.COVERAGE_SUMMARY }}"

@@ -28,6 +28,7 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
+      - run: sudo apt-get install 
       # - name: Use Node
       #   uses: actions/setup-node@v2
       #   with:
@@ -59,8 +60,10 @@ jobs:
 
       - name: get summary coverage
         run: |
-          echo "coverageSummary=$(lcov --summary ./app/coverage/lcov.info)" >> $GITHUB_ENV
+          flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info >> $GITHUB_STEP_SUMMARY
+          echo "coverage_summary=$(lcov --summary ./app/coverage/lcov.info)" >> $GITHUB_ENV
+          echo "" >> $GITHUB_STEP_SUMMARY
       
       - name: get summary report
         run: |
-          echo "${{ env.coverageSummary }}"
+          echo "${{ env.coverage_summary }}"

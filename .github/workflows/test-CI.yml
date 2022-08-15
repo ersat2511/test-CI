@@ -44,6 +44,9 @@ jobs:
           working-directory: ./app
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: echo github credentials
+        run: echo secret.GITHUB_TOKEN
+
       - name: Post jest coverage comments
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}

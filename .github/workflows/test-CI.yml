@@ -59,6 +59,7 @@ jobs:
       #     artifact-name: code-coverage-report-discovery-module
       #     working-directory: ./app
       - run: env
+      - run: secrets
 
       - uses: Nef10/lcov-reporter-action@v0.3.0
         with:

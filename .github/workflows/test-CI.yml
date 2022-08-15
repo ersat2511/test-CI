@@ -27,8 +27,13 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "2.10.5"
-
-      - run: sudo apt-get install 
+      
+      - name: get report
+        uses: Nef10/lcov-reporter-action@v0.3.0
+          with:
+            lcov-file: ./app/coverage/lcov.info
+            pr-number: ${{ env.pr_number }}
+      # - run: sudo apt-get install 
       # - name: Use Node
       #   uses: actions/setup-node@v2
       #   with:
@@ -50,13 +55,13 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@v1
-        with:
-          coverage-files: ./app/coverage/lcov.info
-          minimum-coverage: 50
-          artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app
+      # - name: Report Code Coverage for Testing Discovery Module
+      #   uses: zgosalvez/github-actions-report-lcov@v1
+      #   with:
+      #     coverage-files: ./app/coverage/lcov.info
+      #     minimum-coverage: 50
+      #     artifact-name: code-coverage-report-discovery-module
+      #     working-directory: ./app
 
       - name: get summary coverage
         run: |

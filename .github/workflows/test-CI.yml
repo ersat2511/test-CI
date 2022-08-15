@@ -35,10 +35,7 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - run: |
-          ls -a
-          cd .github/actions
-          ls -a
+      - run: npm --version
 
       - name: Install node dependencies
         working-directory: .github/actions/github-actions-report-lcov

@@ -57,7 +57,7 @@ jobs:
       
       - name: Post jest coverage comments
         env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ github.event.issue.pull_request.number }}
           REPO: ${{ github.repository }}
           SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |

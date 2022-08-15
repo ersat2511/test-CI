@@ -51,13 +51,13 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      # - name: Report Code Coverage for Testing Discovery Module
-      #   uses: zgosalvez/github-actions-report-lcov@v1
-      #   with:
-      #     coverage-files: ./app/coverage/lcov.info
-      #     minimum-coverage: 50
-      #     artifact-name: code-coverage-report-discovery-module
-      #     working-directory: ./app
+      - name: Report Code Coverage for Testing Discovery Module
+        uses: zgosalvez/github-actions-report-lcov@v1
+        with:
+          coverage-files: ./app/coverage/lcov.info
+          minimum-coverage: 50
+          artifact-name: code-coverage-report-discovery-module
+          working-directory: ./app
 
       # - uses: Nef10/lcov-reporter-action@v0.3.0
       #   with:

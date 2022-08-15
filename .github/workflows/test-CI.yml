@@ -33,6 +33,8 @@ jobs:
         with:
           node-version: '12.x'
 
+      - uses: actions/checkout@v3
+
       - run: |
           ls -a
           cd .github/actions

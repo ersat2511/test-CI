@@ -40,9 +40,9 @@ jobs:
           cd .github/actions
           ls -a
 
-      # - name: Install node dependencies
-      #   working-directory: .github/actions/github-actions-report-lcov
-      #   run: npm install
+      - name: Install node dependencies
+        working-directory: .github/actions/github-actions-report-lcov
+        run: npm install
 
       - name: Analyze
         working-directory: ./app

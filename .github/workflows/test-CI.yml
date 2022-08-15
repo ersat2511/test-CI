@@ -33,6 +33,11 @@ jobs:
         with:
           node-version: '12.x'
 
+      - run: |
+          ls -a
+          cd .github
+          ls -a
+
       - name: Install node dependencies
         working-directory: .github/actions/github-actions-report-lcov
         run: npm install

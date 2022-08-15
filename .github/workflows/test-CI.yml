@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
     steps:
+      - name: echo github credentials
+        run: echo secret.GITHUB_TOKEN
+
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
@@ -35,30 +38,28 @@ jobs:
 
       # - uses: actions/checkout@main
 
-      - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@v1
-        with:
-          coverage-files: ./app/coverage/lcov.info
-          minimum-coverage: 50
-          artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Report Code Coverage for Testing Discovery Module
+      #   uses: zgosalvez/github-actions-report-lcov@v1
+      #   with:
+      #     coverage-files: ./app/coverage/lcov.info
+      #     minimum-coverage: 50
+      #     artifact-name: code-coverage-report-discovery-module
+      #     working-directory: ./app
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: echo github credentials
-        run: echo secret.GITHUB_TOKEN
+      # - name: Post jest coverage comments
+      #   env:
+      #     PR_NUMBER: ${{ github.event.pull_request.number }}
+      #     REPO: ${{ github.repository }}
+      #     SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #   run: |
+      #     coverageSummary=$(lcov --summary ./app/coverage/lcov.info)
+      #     curl \
+      #       -X POST \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+      #       https://api.github.com/repos/${{ github.repository }}/issues/ ${{ github.event.pull_request.number }}/comments \
+      #       -d '{"body":"# Job Summary\n https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n'$UNITTESTCOVERAGE'\n"}'
 
-      - name: Post jest coverage comments
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
-          SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/ersat2511/issues/2/comments \
-            -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$UNITTESTCOVERAGE'\n"}'
-
-      - name: get data from summary
-        run: echo $coverageSummary
+      # - name: get data from summary
+      #   run: echo $coverageSummary

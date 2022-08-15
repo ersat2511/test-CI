@@ -28,6 +28,15 @@ jobs:
         with:
           flutter-version: "2.10.5"
 
+      - name: Use Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - name: Install node dependencies
+        working-directory: ./.github/actions/github-actions-report-lcov
+        run: npm install
+
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
@@ -36,16 +45,16 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      # - uses: actions/checkout@main
+      - uses: actions/checkout@main
 
-      # - name: Report Code Coverage for Testing Discovery Module
-      #   uses: zgosalvez/github-actions-report-lcov@v1
-      #   with:
-      #     coverage-files: ./app/coverage/lcov.info
-      #     minimum-coverage: 50
-      #     artifact-name: code-coverage-report-discovery-module
-      #     working-directory: ./app
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Report Code Coverage for Testing Discovery Module
+        uses: ./.github/actions/github-actions-report-lcov
+        with:
+          coverage-files: ./app/coverage/lcov.info
+          minimum-coverage: 50
+          artifact-name: code-coverage-report-discovery-module
+          working-directory: ./app
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Post jest coverage comments
       #   env:

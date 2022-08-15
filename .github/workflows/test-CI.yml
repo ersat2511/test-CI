@@ -60,11 +60,11 @@ jobs:
           PR_NUMBER: 2 #${{ github.event.issue.pull_request.number }}
           REPO: ${{ github.repository }}
           SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          COMMENT_CONTENT: ${{ env.COVERAGE_SUMMARY }}
+          # COMMENT_CONTENT: ${{ env.COVERAGE_SUMMARY }}
         run: |
           curl \
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments \
-            -d '{"body":"# Job Summary\n for further details you can visit this link '$SUMMARY_URL'\n'$COMMENT_CONTENT'\n"}'
+            -d '{"body":"# Job Summary\n for further details you can visit this link '$SUMMARY_URL'\n'$COVERAGE_SUMMARY'\n"}'

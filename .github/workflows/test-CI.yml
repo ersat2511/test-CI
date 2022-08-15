@@ -59,7 +59,8 @@ jobs:
 
       - name: get summary coverage
         run: |
-          echo "coverageSummary=$(lcov --summary ./app/coverage/lcov.info )"
+          echo "coverageSummary=$(lcov --summary ./app/coverage/lcov.info)" >> $GITHUB_ENV
+      
       - name: get summary report
         run: |
           echo "${{ env.coverageSummary }}"

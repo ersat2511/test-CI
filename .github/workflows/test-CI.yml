@@ -53,6 +53,8 @@ jobs:
         run: |
           echo "${{ env.COVERAGE_SUMMARY }}"
       
+      - run: env
+      
       - name: Post jest coverage comments
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}

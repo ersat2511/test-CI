@@ -28,21 +28,6 @@ jobs:
         with:
           flutter-version: "2.10.5"
       
-      # - run: sudo apt-get install 
-
-      # - name: Use Node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '12.x'
-
-      # - uses: actions/checkout@v3
-
-      # - run: npm --version
-
-      # - name: Install node dependencies
-      #   working-directory: .github/actions/github-actions-report-lcov
-      #   run: npm install
-
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
@@ -67,3 +52,11 @@ jobs:
       - name: get summary report
         run: |
           echo "${{ env.COVERAGE_SUMMARY }}"
+      
+      - uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            ${{ env.COVERAGE_SUMMARY }}
+          allow-repeats: true

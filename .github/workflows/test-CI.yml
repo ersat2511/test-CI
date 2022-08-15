@@ -59,17 +59,17 @@ jobs:
       #     artifact-name: code-coverage-report-discovery-module
       #     working-directory: ./app
 
-      - uses: Nef10/lcov-reporter-action@v0.3.0
-        with:
-          lcov-file: ./app/coverage/lcov.info
-          pr-number: 2
-          hide-branch-coverage: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: Nef10/lcov-reporter-action@v0.3.0
+      #   with:
+      #     lcov-file: ./app/coverage/lcov.info
+      #     pr-number: 2
+      #     hide-branch-coverage: true
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: get summary coverage
         run: |
-          flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-          echo "coverage_summary=$(lcov --summary ./app/coverage/lcov.info)" >> $GITHUB_ENV
+          lcov --summary ./app/coverage/lcov.info >> $GITHUB_STEP_SUMMARY
+          echo "COVERAGE_SUMMARY=$GITHUB_STEP_SUMMARY" >> $GITHUB_ENV
           echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: get summary report

@@ -28,10 +28,6 @@ jobs:
         with:
           flutter-version: "2.10.5"
       
-      - uses: Nef10/lcov-reporter-action@v0.3.0
-          with:
-            lcov-file: ./app/coverage/lcov.info
-            pr-number: ${{ env.pr_number }}
       # - run: sudo apt-get install 
       # - name: Use Node
       #   uses: actions/setup-node@v2
@@ -61,6 +57,12 @@ jobs:
       #     minimum-coverage: 50
       #     artifact-name: code-coverage-report-discovery-module
       #     working-directory: ./app
+
+
+      - uses: Nef10/lcov-reporter-action@v0.3.0
+        with:
+            lcov-file: ./app/coverage/lcov.info
+            pr-number: ${{ env.pr_number }}
 
       - name: get summary coverage
         run: |

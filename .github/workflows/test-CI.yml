@@ -62,7 +62,7 @@ jobs:
       - name: get summary coverage
         run: |
           lcov --summary ./app/coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-          echo "COVERAGE_SUMMARY=$(cat $GITHUB_STEP_SUMMARY | grep "lines......" | tr '\n' '===')" >> $GITHUB_ENV
+          echo "COVERAGE_SUMMARY=$(cat $GITHUB_STEP_SUMMARY | tr '\n' '===')" >> $GITHUB_ENV
 
       - name: get summary report
         run: |

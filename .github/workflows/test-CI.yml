@@ -28,8 +28,7 @@ jobs:
         with:
           flutter-version: "2.10.5"
       
-      - name: get report
-        uses: Nef10/lcov-reporter-action@v0.3.0
+      - uses: Nef10/lcov-reporter-action@v0.3.0
           with:
             lcov-file: ./app/coverage/lcov.info
             pr-number: ${{ env.pr_number }}

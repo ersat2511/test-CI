@@ -66,4 +66,4 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments \
-            -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$UNITTESTCOVERAGE'\n"}'
+            -d '{"body":"# Job Summary\n for further details you can visit this link '$SUMMARY_URL'\n'${{ env.COVERAGE_SUMMARY }}'\n"}'

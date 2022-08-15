@@ -54,7 +54,7 @@ jobs:
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/ersat2511/issues/1/comments \
+            https://api.github.com/repos/ersat2511/issues/2/comments \
             -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$UNITTESTCOVERAGE'\n"}'
 
       - name: get data from summary

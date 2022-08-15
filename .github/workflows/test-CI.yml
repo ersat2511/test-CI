@@ -58,7 +58,6 @@ jobs:
       #     minimum-coverage: 50
       #     artifact-name: code-coverage-report-discovery-module
       #     working-directory: ./app
-      - run: env
 
       - uses: Nef10/lcov-reporter-action@v0.3.0
         with:
@@ -72,7 +71,7 @@ jobs:
           flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info >> $GITHUB_STEP_SUMMARY
           echo "coverage_summary=$(lcov --summary ./app/coverage/lcov.info)" >> $GITHUB_ENV
           echo "" >> $GITHUB_STEP_SUMMARY
-      
+
       - name: get summary report
         run: |
           echo "${{ env.coverage_summary }}"

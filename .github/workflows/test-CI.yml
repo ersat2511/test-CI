@@ -68,6 +68,8 @@ jobs:
           rm coverage/temp.txt
         id: coverage-summary-generator
 
+      - run: cat coverage/coverage.txt
+
       - name: Get comment body
         working-directory: app
         run: |
@@ -83,7 +85,7 @@ jobs:
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: |
-            #Job Summary
+            Job Summary
 
             ${{ steps.get-comment-body.outputs.body }}
 

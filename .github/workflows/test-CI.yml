@@ -94,3 +94,9 @@ jobs:
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: upload artefact
+        uses: actions/upload-artifact@v3
+          with:
+            name: coverage-details
+            path: ./app/coverage

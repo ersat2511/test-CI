@@ -44,10 +44,13 @@ jobs:
       #   run: flutter test --coverage --no-pub
           
       - name: get PR number
-        uses: jwalton/gh-find-current-pr@v1
-        id: get-PR-number
+        uses: 8BitJonny/gh-get-current-pr@2.1.0
+        id: get-pr
         with:
-          state: open
+          github-token: ${{ github.token }}
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          filterOutClosed: true
+          filterOutDraft: true
 
       - name: Generate coverage
         working-directory: app
@@ -73,22 +76,12 @@ jobs:
           echo "::set-output name=body::$body"
         id: get-comment-body
 
-      - run: echo "Your PR is ${PR}"
-        if: success() && steps.findPr.outputs.number
-        env:
-          PR: ${{ steps.get-PR-number.outputs.pr }}
-
-      - run: echo "Your PR is ${PR}"
-        if: success() && steps.findPr.outputs.number
-        env:
-          PR: ${{ steps.findPr.outputs.pr }}
-
-      # - name: Create comment
-      #   uses: peter-evans/create-or-update-comment@v2
-      #   with:
-      #     issue-number: ${{ steps.get-PR-number.outputs.number }}
-      #     body: |
-      #       ${{ steps.get-comment-body.outputs.body }}
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ steps.get-PR-number.outputs.number }}
+          body: |
+            ${{ steps.get-comment-body.outputs.body }}
             
-      #       for further detail you can check this action summary
-      #       https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            for further detail you can check this action summary
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

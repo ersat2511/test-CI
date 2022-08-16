@@ -64,7 +64,7 @@ jobs:
         working-directory: ./app
         run: |
           lcov --list coverage/lcov.info >> coverage/coverage.txt
-          sed '/Reading tracefile/d' coverage/coverage.txt
+          sed '/^Reading tracefile/,$d' coverage/coverage.txt
         id: coverage-summary-generator
 
       - name: Get comment body

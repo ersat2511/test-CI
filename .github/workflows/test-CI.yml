@@ -62,15 +62,14 @@ jobs:
           body="$(cat coverage/coverage.txt)"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          body="$(cat coverage/summary.txt)"
+          body="${body//$'\r'/'%0D'}"
           echo "::set-output name=body::$body"
         id: get-comment-body
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: 2
-          body: | 
+          issue-number: ${{ github.event.number }}
+          body: |
             ${{ steps.get-comment-body.outputs.body }}
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

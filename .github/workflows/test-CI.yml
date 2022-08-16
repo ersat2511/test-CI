@@ -63,8 +63,9 @@ jobs:
       - name: generate summary
         working-directory: ./app
         run: |
-          lcov --list coverage/lcov.info >> coverage/coverage.txt
-          sed '/^Reading tracefile/,$d' coverage/coverage.txt
+          lcov --list coverage/lcov.info >> coverage/temp.txt
+          sed -n '/               /,$p' coverage/temp.txt >> coverage/coverage.txt
+          rm coverage/temp.txt
         id: coverage-summary-generator
 
       - name: Get comment body
@@ -82,7 +83,9 @@ jobs:
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: |
-            Job Summary \n
+            #Job Summary
+
             ${{ steps.get-comment-body.outputs.body }}
+
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

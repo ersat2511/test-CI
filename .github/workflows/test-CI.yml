@@ -66,10 +66,12 @@ jobs:
           echo "::set-output name=body::$body"
         id: get-comment-body
 
+      - run: env
+
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: ${{ github.event.number }}
+          issue-number: ${{ steps.comment-branch }}
           body: |
             ${{ steps.get-comment-body.outputs.body }}
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

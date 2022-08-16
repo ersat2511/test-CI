@@ -54,7 +54,6 @@ jobs:
         working-directory: ./app
         run: |
           lcov --list coverage/lcov.info > coverage/summary.txt
-          rm coverage/summary.txt
         id: coverage-summary-generator
 
       - name: Get comment body

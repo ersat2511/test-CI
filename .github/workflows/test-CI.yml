@@ -39,9 +39,9 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub
       
-      - name: Testing app2
-        working-directory: ./app2
-        run: flutter test --coverage --no-pub
+      # - name: Testing app2
+      #   working-directory: ./app2
+      #   run: flutter test --coverage --no-pub
           
       - name: get PR number
         uses: jwalton/gh-find-current-pr@v1
@@ -77,6 +77,11 @@ jobs:
         if: success() && steps.findPr.outputs.number
         env:
           PR: ${{ steps.get-PR-number.outputs.pr }}
+
+      - run: echo "Your PR is ${PR}"
+        if: success() && steps.findPr.outputs.number
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
 
       # - name: Create comment
       #   uses: peter-evans/create-or-update-comment@v2

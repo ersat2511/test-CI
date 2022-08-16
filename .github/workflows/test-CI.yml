@@ -64,7 +64,7 @@ jobs:
         working-directory: ./app
         run: |
           lcov --list coverage/lcov.info >> coverage/temp.txt
-          sed -n '/               /,$p' coverage/temp.txt >> coverage/coverage.txt
+          sed -n '/Filename/,$p' coverage/temp.txt >> coverage/coverage.txt
           rm coverage/temp.txt
         id: coverage-summary-generator
 

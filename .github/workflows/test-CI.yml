@@ -39,8 +39,9 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
       
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
+      - name: get PR number
+        uses: jwalton/gh-find-current-pr@v1
+        id: get-PR-number
         with:
           state: open
 
@@ -71,7 +72,7 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: 2
+          issue-number: ${{ steps.get-PR-number.outputs.pr }}
           body: |
             ${{ steps.get-comment-body.outputs.body }}
             

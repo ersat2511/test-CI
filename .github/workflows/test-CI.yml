@@ -28,6 +28,9 @@ jobs:
         with:
           flutter-version: "2.10.5"
       
+      - name: Install lcov
+        uses: hrishikesh-kadam/setup-lcov@v1
+      
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
@@ -36,34 +39,26 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
 
-      - name: Report Code Coverage for Testing Discovery Module
-        uses: zgosalvez/github-actions-report-lcov@v1
+      - name: Generate coverage
+        working-directory: app
+        run: |
+          genhtml coverage/lcov.info -o coverage/html > coverage/temp.txt
+          sed -n '/Overall/,$p' coverage/temp.txt > coverage/coverage.txt
+          rm coverage/temp.txt
+        id: coverage-generator
+
+      - name: Get comment body
+        working-directory: app
+        run: |
+          body="$(cat coverage/coverage.txt)"
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body"
+        id: get-comment-body
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
         with:
-          coverage-files: ./app/coverage/lcov.info
-          minimum-coverage: 50
-          artifact-name: code-coverage-report-discovery-module
-          working-directory: ./app
-
-      - name: get summary coverage
-        run: |
-          lcov --summary ./app/coverage/lcov.info >> $GITHUB_STEP_SUMMARY
-          echo "COVERAGE_SUMMARY=$(cat $GITHUB_STEP_SUMMARY | tr '\n' '===')" >> $GITHUB_ENV
-
-      - name: get summary report
-        run: |
-          echo "${{ env.COVERAGE_SUMMARY }}"
-      
-      - run: env
-      
-      - name: Post jest coverage comments
-        env:
-          PR_NUMBER: 2 # ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
-          SUMMARY_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          curl \
-            -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments \
-            -d '{"body":"# Job Summary\n'$SUMMARY_URL'\n'$COVERAGE_SUMMARY'\n"}'
+          issue-number: 2
+          body: ${{ steps.get-comment-body.outputs.body }}

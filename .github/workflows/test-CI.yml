@@ -97,6 +97,6 @@ jobs:
 
       - name: upload artefact
         uses: actions/upload-artifact@v3
-          with:
+        with:
             name: coverage-details
             path: ./app/coverage

@@ -86,7 +86,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
-          body: Job Summary ${{ steps.get-comment-body.outputs.body }} for further detail you can check this action summary https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          body: "# Job Summary\n${{ steps.get-comment-body.outputs.body }}\nfor further detail you can check this action summary\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: upload artefact
         uses: actions/upload-artifact@v3

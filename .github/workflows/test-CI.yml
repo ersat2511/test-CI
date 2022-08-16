@@ -68,8 +68,9 @@ jobs:
           rm coverage/temp.txt
         id: coverage-summary-generator
 
-      - run: cat coverage/coverage.txt
+      - name: cat coverage
         working-directory: ./app
+        run: cat coverage/coverage.txt
 
       - name: Get comment body
         working-directory: app

@@ -69,7 +69,7 @@ jobs:
         id: coverage-summary-generator
 
       - name: cat coverage
-        working-directory: ./app
+        working-directory: app
         run: cat coverage/coverage.txt
 
       - name: Get comment body

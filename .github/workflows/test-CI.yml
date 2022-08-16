@@ -60,7 +60,7 @@ jobs:
       - name: generate summary
         working-directory: ./app
         run: |
-          lcov --list coverage/lcov.info > coverage/coverage.txt
+          lcov --list coverage/lcov.info >> coverage/coverage.txt
         id: coverage-summary-generator
 
       - name: Get comment body
@@ -77,6 +77,7 @@ jobs:
         if: success() && steps.findPr.outputs.number
         env:
           PR: ${{ steps.get-PR-number.outputs.pr }}
+
       # - name: Create comment
       #   uses: peter-evans/create-or-update-comment@v2
       #   with:

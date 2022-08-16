@@ -38,6 +38,11 @@ jobs:
       - name: Testing
         working-directory: ./app
         run: flutter test --coverage --no-pub --coverage-path=./coverage/lcov.info
+      
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          state: open
 
       - name: Generate coverage
         working-directory: app
@@ -47,13 +52,10 @@ jobs:
           rm coverage/temp.txt
         id: coverage-generator
 
-      - name: get event data value
-        run: echo ${{ github.event.issue.pull_request }}
-
       - name: generate summary
         working-directory: ./app
         run: |
-          lcov --list coverage/lcov.info > coverage/summary.txt
+          lcov --list coverage/lcov.info > coverage/coverage.txt
         id: coverage-summary-generator
 
       - name: Get comment body
@@ -66,12 +68,12 @@ jobs:
           echo "::set-output name=body::$body"
         id: get-comment-body
 
-      - run: env
-
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: 2
           body: |
             ${{ steps.get-comment-body.outputs.body }}
+            
+            for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

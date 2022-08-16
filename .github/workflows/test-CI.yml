@@ -47,6 +47,16 @@ jobs:
           rm coverage/temp.txt
         id: coverage-generator
 
+      - name: get event data value
+        run: echo ${{ github.event.issue.pull_request }}
+
+      - name: generate summary
+        working-directory: ./app
+        run: |
+          lcov --list coverage/lcov.info > coverage/summary.txt
+          rm coverage/summary.txt
+        id: coverage-summary-generator
+
       - name: Get comment body
         working-directory: app
         run: |
@@ -54,6 +64,7 @@ jobs:
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
+          body="$(cat coverage/summary.txt)"
           echo "::set-output name=body::$body"
         id: get-comment-body
 
@@ -61,4 +72,6 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: 2
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body: | 
+            ${{ steps.get-comment-body.outputs.body }}
+            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

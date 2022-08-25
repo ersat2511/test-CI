@@ -53,7 +53,7 @@ jobs:
           -a app/coverage/lcov.info \
           -a app2/coverage/lcov.info \
           -o merged.info
-          lcov --extract merged.info 'lib/src/*_view_model_impl.dart' -o merged.info
+        # lcov --extract merged.info 'lib/src/pages/*/*_view_model_impl.dart' -o merged.info
           
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0

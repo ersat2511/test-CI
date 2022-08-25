@@ -50,8 +50,8 @@ jobs:
       - name: merge lcov file
         run: |
           lcov \
-          -a app/coverage/lcov.info \
-          -a app2/coverage/lcov.info \
+          --add-tracefile app/coverage/lcov.info \
+          --add-tracefile app2/coverage/lcov.info \
           -o merged.info
           
       - name: get PR number

@@ -39,6 +39,7 @@ jobs:
         working-directory: ./app
         run: |
           flutter test --coverage --no-pub
+          pwd
           lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
       
       - name: Analyze
@@ -49,6 +50,7 @@ jobs:
         working-directory: ./app2
         run: |
           flutter test --coverage --no-pub
+          pwd
           lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: merge lcov file

@@ -68,10 +68,6 @@ jobs:
           sed -n '/Overall/,$p' > coverage/coverage.txt
         id: coverage-generator
 
-      - name: cat coverage
-        working-directory: app
-        run: cat coverage/coverage.txt
-
       - name: Get comment body
         working-directory: app
         run: |

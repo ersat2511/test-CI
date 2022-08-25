@@ -38,8 +38,8 @@ jobs:
       - name: Testing app
         working-directory: ./app
         run: |
-        flutter test --coverage --no-pub
-        lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
+          flutter test --coverage --no-pub
+          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
       
       - name: Analyze
         working-directory: ./app2
@@ -48,8 +48,8 @@ jobs:
       - name: Testing app2
         working-directory: ./app2
         run: |
-        flutter test --coverage --no-pub
-        lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
+          flutter test --coverage --no-pub
+          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: merge lcov file
         run: |

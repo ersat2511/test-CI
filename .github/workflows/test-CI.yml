@@ -56,7 +56,7 @@ jobs:
         run: |
           percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
           echo "::set-output name=percentageRate::$percentageRate"
-        id: coverage-generator
+        id: get-modules-percentage
 
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0

@@ -39,7 +39,7 @@ jobs:
         working-directory: ./app
         run: |
           flutter test --coverage
-          genhtml coverage/lcov.info -o coverage
+          genhtml coverage/lcov.info -o app/coverage
         # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: Generate coverage
@@ -57,7 +57,7 @@ jobs:
         working-directory: ./app2
         run: |
           flutter test --coverage
-          genhtml coverage/lcov.info -o coverage
+          genhtml coverage/lcov.info -o app2/coverage
         # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: Generate coverage

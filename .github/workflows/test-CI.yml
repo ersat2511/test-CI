@@ -45,11 +45,11 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub
 
-      - uses: Nef10/lcov-reporter-action@v0.3.0
-        with:
-          lcov-file: ./app/coverage/lcov.info
-          github-token: ${{ github.token}}
-          pr_number: ${{ steps.get-PR-number.outputs.number }}
+      # - uses: Nef10/lcov-reporter-action@v0.3.0
+      #   with:
+      #     lcov-file: ./app/coverage/lcov.info
+      #     github-token: ${{ github.token}}
+      #     pr_number: ${{ steps.get-PR-number.outputs.number }}
       
       - name: Analyze
         working-directory: ./app2
@@ -63,6 +63,6 @@ jobs:
         with:
           title: APP 2
           working-directory: ./app2
-          lcov-file: ./app2/coverage/lcov.info
+          lcov-file: ./coverage/lcov.info
           github-token: ${{ github.token}}
           # pr_number: ${{ steps.get-PR-number.outputs.number }}

@@ -54,7 +54,7 @@ jobs:
       - name: Generate coverage
         working-directory: app
         run: |
-          percentageRate=$(lcov --summary "$PATH_COVERAGE" | grep "lines......")
+          percentageRate=$(lcov --summary ./app/coverage/lcov.info | grep "lines......")
           echo "::set-output name=percentageRate::$percentageRate"
         id: coverage-generator
 

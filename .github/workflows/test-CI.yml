@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
     steps:
+      - name: echo github credentials
+        run: echo secret.GITHUB_TOKEN
+
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
@@ -27,6 +30,33 @@ jobs:
       
       - name: Install lcov
         uses: hrishikesh-kadam/setup-lcov@v1
+      
+      - name: Analyze
+        working-directory: ./app
+        run: flutter analyze
+
+      - name: Testing app
+        working-directory: ./app
+        run: |
+          flutter test --coverage --no-pub
+          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
+      
+      - name: Analyze
+        working-directory: ./app2
+        run: flutter analyze
+
+      - name: Testing app2
+        working-directory: ./app2
+        run: |
+          flutter test --coverage --no-pub
+          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
+
+      - name: Generate coverage
+        working-directory: app
+        run: |
+          percentageRate=$(lcov --summary "$PATH_COVERAGE" | grep "lines......")
+          echo "::set-output name=percentageRate::$percentageRate"
+        id: coverage-generator
 
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0
@@ -37,29 +67,12 @@ jobs:
           filterOutClosed: true
           filterOutDraft: true
       
-      - name: Analyze
-        working-directory: ./app
-        run: flutter analyze
-
-      - name: Testing app
-        working-directory: ./app
-        run: flutter test --coverage --no-pub
-
-      # - uses: Nef10/lcov-reporter-action@v0.3.0
-      #   with:
-      #     lcov-file: ./app/coverage/lcov.info
-      #     github-token: ${{ github.token}}
-      #     pr_number: ${{ steps.get-PR-number.outputs.number }}
-      
-      - name: Analyze
-        working-directory: ./app2
-        run: flutter analyze
-
-      - name: Testing app2
-        working-directory: ./app2
-        run: flutter test --coverage --no-pub
-
-      - uses: ScaCap/code-coverage-assistant@v0.1
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v2
         with:
-            github-token: ${{ github.token }}
-            monorepo-base-path: "./"
+          issue-number: ${{ steps.get-PR-number.outputs.number }}
+          body: | 
+            #Job Summary
+            ${{ steps.get-modules-percentage.outputs.percentageRate }}
+            for further detail you can check this action summary
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

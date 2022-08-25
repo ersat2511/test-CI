@@ -46,13 +46,14 @@ jobs:
       - name: Testing app2
         working-directory: ./app2
         run: flutter test --coverage --no-pub
-
+          
       - name: merge lcov file
         run: |
           lcov \
-          --add-tracefile app/coverage/lcov.info \
-          --add-tracefile app2/coverage/lcov.info \
+          -a app/coverage/lcov.info \
+          -a app2/coverage/lcov.info \
           -o merged.info
+        # lcov --extract merged.info 'lib/src/pages/*/*_view_model_impl.dart' -o merged.info
           
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0

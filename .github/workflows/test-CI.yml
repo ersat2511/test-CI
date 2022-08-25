@@ -62,35 +62,35 @@ jobs:
           github-token: ${{ github.token}}
           pr_number: ${{ steps.get-PR-number.outputs.number }}
 
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          genhtml coverage/lcov.info -o coverage/html | \
-          sed -n '/Overall/,$p' > coverage/coverage.txt
-        id: coverage-generator
+      # - name: Generate coverage
+      #   working-directory: app
+      #   run: |
+      #     genhtml coverage/lcov.info -o coverage/html | \
+      #     sed -n '/Overall/,$p' > coverage/coverage.txt
+      #   id: coverage-generator
 
-      - name: Get comment body
-        working-directory: app
-        run: |
-          body="$(cat coverage/coverage.txt)"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "::set-output name=body::$body"
-        id: get-comment-body
+      # - name: Get comment body
+      #   working-directory: app
+      #   run: |
+      #     body="$(cat coverage/coverage.txt)"
+      #     body="${body//'%'/'%25'}"
+      #     body="${body//$'\n'/'%0A'}"
+      #     body="${body//$'\r'/'%0D'}"
+      #     echo "::set-output name=body::$body"
+      #   id: get-comment-body
 
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          issue-number: ${{ steps.get-PR-number.outputs.number }}
-          body: | 
-            Job Summary
-            "coverage/coverage.txt"
-            for further detail you can check this action summary
-            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      # - name: Create comment
+      #   uses: peter-evans/create-or-update-comment@v2
+      #   with:
+      #     issue-number: ${{ steps.get-PR-number.outputs.number }}
+      #     body: | 
+      #       Job Summary
+      #       "coverage/coverage.txt"
+      #       for further detail you can check this action summary
+      #       https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-      - name: upload artefact
-        uses: actions/upload-artifact@v3
-        with:
-            name: coverage-details
-            path: ./app/coverage
+      # - name: upload artefact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #       name: coverage-details
+      #       path: ./app/coverage

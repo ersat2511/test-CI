@@ -82,9 +82,9 @@ jobs:
             Job Summary
 
               App: 
-                ${{ steps.get-modules-percentage.outputs.percentageRate }}
+                ${{ steps.get-app-percentage.outputs.percentageRate }}
               App2:
-                ${{ steps.get-modules-percentage.outputs.percentageRate }}
+                ${{ steps.get-app2-percentage.outputs.percentageRate }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

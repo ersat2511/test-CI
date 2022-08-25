@@ -57,6 +57,7 @@ jobs:
           filterOutDraft: true
 
       - uses: Nef10/lcov-reporter-action@v0.3.0
+        working-directory: ./app
         with:
           github-token: ${{ github.token}}
           pr_number: ${{ steps.get-PR-number.outputs.number }}

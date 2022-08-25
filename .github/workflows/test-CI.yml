@@ -46,7 +46,7 @@ jobs:
         run: |
           percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
           echo "::set-output name=percentageRate::$percentageRate"
-        id: get-modules-percentage
+        id: get-app-percentage
       
       - name: Analyze
         working-directory: ./app2
@@ -63,7 +63,7 @@ jobs:
         run: |
           percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
           echo "::set-output name=percentageRate::$percentageRate"
-        id: get-modules-percentage
+        id: get-app2-percentage
 
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0

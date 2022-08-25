@@ -58,8 +58,8 @@ jobs:
 
       - uses: Nef10/lcov-reporter-action@v0.3.0
         with:
-          lcov-file: lcov.info
-          pr-number: ${{ steps.get-PR-number.outputs.number }}
+          github-token: ${{ github.token}}
+          pr_number: ${{ steps.get-PR-number.outputs.number }}
 
       - name: Generate coverage
         working-directory: app

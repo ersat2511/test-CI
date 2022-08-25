@@ -61,7 +61,6 @@ jobs:
 
       - uses: acid-chicken/lcov-reporter-action@v0.4.1
         with:
-          title: APP
           lcov-file: ./app2/coverage/lcov.info
           github-token: ${{ github.token}}
           pr_number: ${{ steps.get-PR-number.outputs.number }}

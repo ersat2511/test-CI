@@ -58,18 +58,10 @@ jobs:
       - name: Testing app2
         working-directory: ./app2
         run: flutter test --coverage --no-pub
-
-
-      - uses: Nef10/lcov-reporter-action@v0.3.0
+        
+      - uses: Nef10/lcov-reporter-action@v0.3.1
         with:
           lcov-file: ./app2/coverage/lcov.info
           github-token: ${{ github.token}}
           pr_number: ${{ steps.get-PR-number.outputs.number }}
-          
-      # - name: merge lcov file
-      #   run: |
-      #     lcov \
-      #     -a app/coverage/lcov.info \
-      #     -a app2/coverage/lcov.info \
-      #     -o merged.info
-        # lcov --extract merged.info 'lib/src/pages/*/*_view_model_impl.dart' -o merged.info
+          output-file: test

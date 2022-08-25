@@ -60,7 +60,7 @@ jobs:
         working-directory: app
         run: |
           genhtml coverage/lcov.info -o coverage/html | \
-          sed -n '/Overall/,$p' coverage/temp.txt > coverage/coverage.txt
+          sed -n '/Overall/,$p' > coverage/coverage.txt
         id: coverage-generator
 
       - name: cat coverage
@@ -82,10 +82,10 @@ jobs:
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: | 
-            "Job Summary"
-            "$(cat coverage/coverage.txt)"
-            "for further detail you can check this action summary"
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            Job Summary
+            $(cat coverage/coverage.txt)
+            for further detail you can check this action summary
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: upload artefact
         uses: actions/upload-artifact@v3

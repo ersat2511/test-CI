@@ -37,7 +37,9 @@ jobs:
 
       - name: Testing app
         working-directory: ./app
-        run: flutter test --coverage --no-pub
+        run: |
+        flutter test --coverage --no-pub
+        lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
       
       - name: Analyze
         working-directory: ./app2
@@ -45,13 +47,15 @@ jobs:
 
       - name: Testing app2
         working-directory: ./app2
-        run: flutter test --coverage --no-pub
+        run: |
+        flutter test --coverage --no-pub
+        lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: merge lcov file
         run: |
           lcov \
-          --add-tracefile app/coverage/lcov.info \
-          --add-tracefile app2/coverage/lcov.info \
+          -a app/coverage/lcov.info \
+          -a app2/coverage/lcov.info \
           -o merged.info
           
       - name: get PR number

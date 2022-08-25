@@ -59,8 +59,7 @@ jobs:
         working-directory: ./app2
         run: flutter test --coverage --no-pub
 
-      - uses: acid-chicken/lcov-reporter-action@v0.4.1
+      - uses: ScaCap/code-coverage-assistant@v1
         with:
-          lcov-file: ./app2/coverage/lcov.info
-          github-token: ${{ github.token}}
-          pr_number: ${{ steps.get-PR-number.outputs.number }}
+            github-token: ${{ github.token }}
+            monorepo-base-path: "./"

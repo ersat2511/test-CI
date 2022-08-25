@@ -64,4 +64,4 @@ jobs:
           title: APP 2
           lcov-file: ./app2/coverage/lcov.info
           github-token: ${{ github.token}}
-          pr_number: ${{ steps.get-PR-number.outputs.number }}
+          # pr_number: ${{ steps.get-PR-number.outputs.number }}

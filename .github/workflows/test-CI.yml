@@ -63,9 +63,6 @@ jobs:
           filterOutClosed: true
           filterOutDraft: true
 
-      - name: generate clean lcov report
-        run: lcov --extract merged.info 'lib/src/*_view_model_impl.dart' -o merged.info
-
       - uses: Nef10/lcov-reporter-action@v0.3.0
         with:
           lcov-file: merged.info

@@ -37,10 +37,7 @@ jobs:
 
       - name: Testing app
         working-directory: ./app
-        run: |
-          flutter test --coverage --no-pub
-          pwd
-          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
+        run: flutter test --coverage --no-pub
       
       - name: Analyze
         working-directory: ./app2
@@ -48,11 +45,8 @@ jobs:
 
       - name: Testing app2
         working-directory: ./app2
-        run: |
-          flutter test --coverage --no-pub
-          pwd
-          lcov --extract coverage/lcov.info 'lib/src/*_view_model_impl.dart' -o coverage/lcov.info
-
+        run: flutter test --coverage --no-pub
+          
       - name: merge lcov file
         run: |
           lcov \
@@ -68,6 +62,9 @@ jobs:
           sha: ${{ steps.comment-branch.outputs.head_sha }}
           filterOutClosed: true
           filterOutDraft: true
+
+      - name: generate clean lcov report
+        run: lcov --extract merged.info 'lib/src/*_view_model_impl.dart' -o merged.info
 
       - uses: Nef10/lcov-reporter-action@v0.3.0
         with:

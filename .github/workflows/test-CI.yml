@@ -56,6 +56,11 @@ jobs:
           filterOutClosed: true
           filterOutDraft: true
 
+      - uses: Nef10/lcov-reporter-action@v0.3.0
+        with:
+          lcov-file: lcov.info
+          pr-number: ${{ steps.get-PR-number.outputs.number }}
+
       - name: Generate coverage
         working-directory: app
         run: |
@@ -83,7 +88,7 @@ jobs:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: | 
             Job Summary
-            $(cat coverage/coverage.txt)
+            "coverage/coverage.txt"
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 

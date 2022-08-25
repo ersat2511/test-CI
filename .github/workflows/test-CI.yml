@@ -39,9 +39,9 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub
       
-      # - name: Testing app2
-      #   working-directory: ./app2
-      #   run: flutter test --coverage --no-pub
+      - name: Testing app2
+        working-directory: ./app2
+        run: flutter test --coverage --no-pub
           
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0
@@ -60,27 +60,15 @@ jobs:
           rm coverage/temp.txt
         id: coverage-generator
 
-      - name: generate summary
-        working-directory: ./app
-        run: |
-          lcov --list coverage/lcov.info >> coverage/temp.txt
-          sed -n '/    /,$p' coverage/temp.txt | tr -d '%#%' >> coverage/coverage.txt
-          rm coverage/temp.txt
-        id: coverage-summary-generator
-
-      - name: cat coverage
-        working-directory: app
-        run: cat coverage/coverage.txt
-
-      - name: Get comment body
-        working-directory: app
-        run: |
-          body="$(cat coverage/coverage.txt)"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "::set-output name=body::$body"
-        id: get-comment-body
+      # - name: Get comment body
+      #   working-directory: app
+      #   run: |
+      #     body="$(cat coverage/coverage.txt)"
+      #     body="${body//'%'/'%25'}"
+      #     body="${body//$'\n'/'%0A'}"
+      #     body="${body//$'\r'/'%0D'}"
+      #     echo "::set-output name=body::$body"
+      #   id: get-comment-body
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2

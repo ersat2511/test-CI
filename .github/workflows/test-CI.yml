@@ -40,6 +40,13 @@ jobs:
         run: |
           flutter test --coverage --no-pub
         # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
+
+      - name: Generate coverage
+        working-directory: app
+        run: |
+          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
+          echo "::set-output name=percentageRate::$percentageRate"
+        id: get-modules-percentage
       
       - name: Analyze
         working-directory: ./app2
@@ -72,7 +79,18 @@ jobs:
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: | 
-            #Job Summary
-            ${{ steps.get-modules-percentage.outputs.percentageRate }}
+            Job Summary
+
+              App: 
+                ${{ steps.get-modules-percentage.outputs.percentageRate }}
+              App2:
+                ${{ steps.get-modules-percentage.outputs.percentageRate }}
+
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: upload artefact
+        uses: actions/upload-artifact@v3
+        with:
+            name: coverage-details
+            path: ./*/coverage

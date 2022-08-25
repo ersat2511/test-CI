@@ -59,7 +59,7 @@ jobs:
         working-directory: ./app2
         run: flutter test --coverage --no-pub
 
-      - uses: ScaCap/code-coverage-assistant@v1
+      - uses: ScaCap/code-coverage-assistant@v0.1
         with:
             github-token: ${{ github.token }}
             monorepo-base-path: "./"

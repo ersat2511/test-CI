@@ -39,9 +39,13 @@ jobs:
         working-directory: ./app
         run: flutter test --coverage --no-pub
       
-      # - name: Testing app2
-      #   working-directory: ./app2
-      #   run: flutter test --coverage --no-pub
+      - name: Analyze
+        working-directory: ./app2
+        run: flutter analyze
+
+      - name: Testing app2
+        working-directory: ./app2
+        run: flutter test --coverage --no-pub
           
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0

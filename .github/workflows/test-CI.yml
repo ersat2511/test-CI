@@ -38,13 +38,13 @@ jobs:
       - name: get file changes
         run: | 
           git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+          
 
       - name: Testing app
         working-directory: ./app
         run: |
           flutter test --coverage
           genhtml coverage/lcov.info -o app/coverage
-        # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
 
       - name: Generate coverage
         working-directory: app

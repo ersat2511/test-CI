@@ -37,7 +37,9 @@ jobs:
 
       - name: get file changes
         run: | 
-          echo "git diff --name-only ${{ github.event.before }} ${{ github.event.after }}"
+          percentageRate=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }}")
+          echo "::set-output name=percentageRate::$percentageRate"
+        id: get-app-changes
 
       - name: Testing app
         working-directory: ./app
@@ -91,6 +93,8 @@ jobs:
               ${{ steps.get-app-percentage.outputs.percentageRate }}
             App2:
               ${{ steps.get-app2-percentage.outputs.percentageRate }}
+            
+            changes: ${{steps.get-app-changes.outputs.percentageRate}}
             ```
             
             for further detail you can check this action summary

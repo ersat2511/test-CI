@@ -22,6 +22,7 @@ jobs:
       
       - name: get file changes
         run: | 
+          git fetch
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }}..origin/${{ steps.comment-branch.outputs.base_ref }})
           echo "::set-output name=changedFiles::$changedFiles"
         id: get-app-changes

@@ -34,14 +34,10 @@ jobs:
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
-      
-      - name: filter changed file
-        id: files
-        uses: jitterbit/get-changed-files@v1
-      - run: |
-              for changed_file in ${{ steps.files.outputs.all }}; do
-                echo "Do something with this ${changed_file}."
-              done
+
+      - name: get file changes
+        run: | 
+          git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
 
       - name: Testing app
         working-directory: ./app

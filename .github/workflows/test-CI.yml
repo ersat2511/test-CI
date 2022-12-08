@@ -37,8 +37,7 @@ jobs:
 
       - name: get file changes
         run: | 
-          git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
-          
+          echo git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
 
       - name: Testing app
         working-directory: ./app

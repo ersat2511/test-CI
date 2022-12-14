@@ -24,6 +24,7 @@ jobs:
         run: | 
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*app*\w*" | uniq)
+          echo this is $changedFiles
           echo "changedFiles=$changedFiles" >> $GITHUB_OUTPUT
         id: get-app-changes
 

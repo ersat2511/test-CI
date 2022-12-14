@@ -51,7 +51,7 @@ jobs:
           for file in $changedFiles 
           do
             ls
-            cd ./modules/$file
+            cd modules/$file
             flutter test --coverage
             genhtml coverage/lcov.info -o coverage
             finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")

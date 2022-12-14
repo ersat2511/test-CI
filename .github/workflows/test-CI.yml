@@ -27,9 +27,9 @@ jobs:
           for file in $changedFiles 
           do
             echo this is the $file
-            
+            finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")
+            echo "::set-output name=finalString::$finalString"
           done
-          echo "::set-output name=changedFiles::$changedFiles"
         id: get-app-changes
 
       - uses: actions/setup-java@v1
@@ -46,37 +46,6 @@ jobs:
       - name: Analyze
         working-directory: ./app
         run: flutter analyze
-
-      - name: Testing app
-        working-directory: ./app
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app/coverage
-
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app-percentage
-      
-      - name: Analyze
-        working-directory: ./app2
-        run: flutter analyze
-
-      - name: Testing app2
-        working-directory: ./app2
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app2/coverage
-        # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
-
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app2-percentage
 
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0
@@ -95,7 +64,7 @@ jobs:
             Job Summary
             
             ```
-            changes: ${{steps.get-app-changes.outputs.changedFiles}}
+            ${{steps.get-app-changes.outputs.finalString}}
             ```
             
             for further detail you can check this action summary

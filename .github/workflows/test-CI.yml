@@ -26,7 +26,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.0.0"
+          flutter-version: "2.18.5"
       
       - name: Install lcov
         uses: hrishikesh-kadam/setup-lcov@v1

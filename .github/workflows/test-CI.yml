@@ -60,7 +60,6 @@ jobs:
           done
         id: get-app-changes
 
-      
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         with:

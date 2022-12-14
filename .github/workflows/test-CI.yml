@@ -24,9 +24,9 @@ jobs:
         with:
           java-version: "12.x"
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v3
         with:
-          flutter-version: "2.10.5"
+          flutter-version: "3.0.0"
       
       - name: Install lcov
         uses: hrishikesh-kadam/setup-lcov@v1
@@ -51,7 +51,7 @@ jobs:
           for file in $changedFiles 
           do
             echo this is the $file
-            cd ./modules/$file
+            cd modules/$file
             flutter test --coverage
             lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
             genhtml coverage/lcov.info -o coverage

@@ -24,9 +24,10 @@ jobs:
         run: | 
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
-          echo this is the $file
           for file in $changedFiles; do
+          echo this is the $file
           flutter run test --coverage $file
+          # echo "::set-output name=changedFiles::$changedFiles"
         id: get-app-changes
 
       - uses: actions/setup-java@v1
@@ -92,6 +93,7 @@ jobs:
             Job Summary
             
             ```
+            changes: ${{steps.get-app-changes.outputs.changedFiles}}
             ```
             
             for further detail you can check this action summary

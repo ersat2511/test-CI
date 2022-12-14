@@ -45,7 +45,7 @@ jobs:
           filterOutDraft: true
             
       - name: get file changes
-        run: | 
+        run: |
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
           for file in $changedFiles 

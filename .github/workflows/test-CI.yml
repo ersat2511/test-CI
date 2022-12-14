@@ -16,9 +16,17 @@ jobs:
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
+      
+      - name: get file changes
+        run: | 
+          git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
+          changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*app*\w*" | uniq)
+          echo this is the $changedFiles
+          echo "::set-output name=changedFiles::$changedFiles"
+        id: get-app-changes
 
       - uses: actions/setup-java@v1
         with:
@@ -35,42 +43,36 @@ jobs:
         working-directory: ./app
         run: flutter analyze
 
-      - name: get file changes
-        run: | 
-          percentageRate=$(git diff --name-only ${{ steps.comment-branch.outputs.base_ref }} ${{ steps.comment-branch.outputs.head_ref }})
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app-changes
+      # - name: Testing app
+      #   working-directory: ./app
+      #   run: |
+      #     flutter test --coverage
+      #     genhtml coverage/lcov.info -o app/coverage
 
-      - name: Testing app
-        working-directory: ./app
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app/coverage
-
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app-percentage
+      # - name: Generate coverage
+      #   working-directory: app
+      #   run: |
+      #     percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
+      #     echo "::set-output name=percentageRate::$percentageRate"
+      #   id: get-app-percentage
       
-      - name: Analyze
-        working-directory: ./app2
-        run: flutter analyze
+      # - name: Analyze
+      #   working-directory: ./app2
+      #   run: flutter analyze
 
-      - name: Testing app2
-        working-directory: ./app2
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app2/coverage
-        # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
+      # - name: Testing app2
+      #   working-directory: ./app2
+      #   run: |
+      #     flutter test --coverage
+      #     genhtml coverage/lcov.info -o app2/coverage
+      #   # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
 
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app2-percentage
+      # - name: Generate coverage
+      #   working-directory: app
+      #   run: |
+      #     percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
+      #     echo "::set-output name=percentageRate::$percentageRate"
+      #   id: get-app2-percentage
 
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0
@@ -89,12 +91,7 @@ jobs:
             Job Summary
             
             ```
-            App: 
-              ${{ steps.get-app-percentage.outputs.percentageRate }}
-            App2:
-              ${{ steps.get-app2-percentage.outputs.percentageRate }}
-            
-            changes: ${{steps.get-app-changes.outputs.percentageRate}}
+            changes: ${{steps.get-app-changes.outputs.changedFiles}}
             ```
             
             for further detail you can check this action summary

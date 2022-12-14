@@ -51,7 +51,7 @@ jobs:
           for file in $changedFiles 
           do
             echo this is the $file
-            finalString=$file : ${{(lcov --summary ./coverage/lcov.info | grep "lines......")}}'
+            finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")
             echo "finalString=$finalString" >> $GITHUB_OUTPUT
           done
         id: get-app-changes

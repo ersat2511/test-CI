@@ -25,7 +25,7 @@ jobs:
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }})
           for file in $changedFiles; do
-            changedModule=$(grep -oh "\w*_module\w*" $file)
+            changedModule=$(grep -oh "\w*app\w*" $file)
             echo $changedModule
           done
 

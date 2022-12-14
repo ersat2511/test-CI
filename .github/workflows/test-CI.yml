@@ -50,6 +50,7 @@ jobs:
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
           for file in $changedFiles 
           do
+            ls
             cd ./modules/$file
             flutter test --coverage
             genhtml coverage/lcov.info -o coverage

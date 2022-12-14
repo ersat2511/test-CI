@@ -55,7 +55,7 @@ jobs:
             genhtml coverage/lcov.info -o coverage
             finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")
             echo "finalString=$finalString" >> $GITHUB_OUTPUT
-            cd ../
+            cd ../../
           done
         id: get-app-changes
 

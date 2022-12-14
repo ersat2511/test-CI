@@ -53,7 +53,6 @@ jobs:
             echo this is the $file
             cd modules/$file
             flutter test --coverage
-            lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
             genhtml coverage/lcov.info -o coverage
             finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")
             echo "finalString=$finalString" >> $GITHUB_OUTPUT

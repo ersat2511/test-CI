@@ -19,18 +19,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
-      
-      - name: get file changes
-        run: | 
-          git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
-          changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
-          for file in $changedFiles 
-          do
-            echo this is the $file
-            
-          done
-          echo "::set-output name=changedFiles::$changedFiles"
-        id: get-app-changes
 
       - uses: actions/setup-java@v1
         with:
@@ -47,37 +35,6 @@ jobs:
         working-directory: ./app
         run: flutter analyze
 
-      - name: Testing app
-        working-directory: ./app
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app/coverage
-
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app-percentage
-      
-      - name: Analyze
-        working-directory: ./app2
-        run: flutter analyze
-
-      - name: Testing app2
-        working-directory: ./app2
-        run: |
-          flutter test --coverage
-          genhtml coverage/lcov.info -o app2/coverage
-        # lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
-
-      - name: Generate coverage
-        working-directory: app
-        run: |
-          percentageRate=$(lcov --summary ./coverage/lcov.info | grep "lines......")
-          echo "::set-output name=percentageRate::$percentageRate"
-        id: get-app2-percentage
-
       - name: get PR number
         uses: 8BitJonny/gh-get-current-pr@2.1.0
         id: get-PR-number
@@ -86,6 +43,23 @@ jobs:
           sha: ${{ steps.comment-branch.outputs.head_sha }}
           filterOutClosed: true
           filterOutDraft: true
+            
+      - name: get file changes
+        run: |
+          git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
+          changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
+          for file in $changedFiles 
+          do
+            echo this is the $file
+            cd ./modules/$file
+            flutter test --coverage
+            lcov --extract coverage/lcov.info 'lib/src/pages/*/*_view_model_impl.dart' -o coverage/lcov.info
+            genhtml coverage/lcov.info -o coverage
+            finalString=$file : $(lcov --summary ./coverage/lcov.info | grep "lines......")
+            echo "finalString=$finalString" >> $GITHUB_OUTPUT
+          done
+        id: get-app-changes
+
       
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
@@ -95,7 +69,7 @@ jobs:
             Job Summary
             
             ```
-            changes: ${{steps.get-app-changes.outputs.changedFiles}}
+            ${{steps.get-app-changes.outputs.finalString}}
             ```
             
             for further detail you can check this action summary

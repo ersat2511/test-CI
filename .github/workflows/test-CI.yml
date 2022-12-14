@@ -27,7 +27,7 @@ jobs:
           for file in $changedFiles; do
           echo this is the $file
           flutter run test --coverage $file
-          # echo "::set-output name=changedFiles::$changedFiles"
+          echo "::set-output name=changedFiles::$changedFiles"
         id: get-app-changes
 
       - uses: actions/setup-java@v1

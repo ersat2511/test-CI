@@ -51,10 +51,14 @@ jobs:
           for file in $changedFiles 
           do
             echo finalString_$file=$file : Sfile % blabla of blabla
-            echo "finalString=$finalString_$file" >> $GITHUB_OUTPUT
+            echo "finalString=$finalString_$file" >> coverage/coverage.txt
           done
-          echo ${{ steps.get-app-changes.outputs.finalString }}
-        id: get-app-changes
+          coverageFile="$(cat coverage/coverage.txt)"
+          coverageFile="${coverageFile//'%'/'%25'}"
+          coverageFile="${coverageFile//$'\n'/'%0A'}"
+          coverageFile="${coverageFile//$'\r'/'%0D'}"
+          echo this is the final value ${{ steps.get-app-testing.outputs.finalString }}
+        id: get-app-testing
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
@@ -63,7 +67,7 @@ jobs:
           body: | 
             Job Summary
             
-            ${{steps.get-app-changes.outputs.finalString}}
+            ${{steps.get-app-testing.outputs.finalString}}
             
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

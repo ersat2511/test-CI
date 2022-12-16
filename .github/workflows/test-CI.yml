@@ -62,12 +62,6 @@ jobs:
         
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
-        env:
-          auth_module: ''
-          discovery_module: ''
-          product_module: ''
-          review_module: ''
-          transaction_module: ''
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: | 
@@ -75,7 +69,7 @@ jobs:
             
             ${{ steps.get-app-testing.outputs.result_auth_module }}
             ${{ steps.get-app-testing.outputs.result_transaction_module }}
-            
+
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 

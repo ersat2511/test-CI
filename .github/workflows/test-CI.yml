@@ -51,7 +51,7 @@ jobs:
           for file in $changedFiles 
           do
             finalString_$file=$file
-            echo "finalString=$finalString_$file" >> $GITHUB_OUTPUT
+            echo "finalString_$file=$finalString_$file" >> $GITHUB_OUTPUT
           done
         id: get-app-changes
 

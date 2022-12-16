@@ -50,8 +50,7 @@ jobs:
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
           for file in $changedFiles 
           do
-            finalString_$file=$file : Sfile % blabla of blabla
-            echo $finalString_$file
+            echo finalString_$file=$file : Sfile % blabla of blabla
             echo "finalString=$finalString_$file" >> $GITHUB_OUTPUT
           done
           echo ${{ steps.get-app-changes.outputs.finalString }}
@@ -64,9 +63,7 @@ jobs:
           body: | 
             Job Summary
             
-            
             ${{steps.get-app-changes.outputs.finalString}}
-            
             
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

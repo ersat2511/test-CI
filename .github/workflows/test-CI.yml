@@ -27,7 +27,7 @@ jobs:
           for file in $changedFiles 
           do
             finalString="$file : $file % blabla of blabla"
-            echo this is final String $finalString
+            echo "::set-output name=test_$file::$finalString"
             echo "result_$file=$finalString" >> GITHUB_OUTPUT
           done
         id: get-app-testing
@@ -41,6 +41,9 @@ jobs:
           done
           echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
           echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
+          echo ========================
+          echo this is auth_module ${{ steps.get-app-testing.outputs.test_auth_module }}
+          echo this is transaction_module ${{ steps.get-app-testing.outputs.test_transaction_module }}
 
       # - uses: actions/setup-java@v1
       #   with:
@@ -75,6 +78,10 @@ jobs:
             
             ${{ steps.get-app-testing.outputs.result_auth_module }}
             ${{ steps.get-app-testing.outputs.result_transaction_module }}
+
+
+            ${{ steps.get-app-testing.outputs.test_auth_module }}
+            ${{ steps.get-app-testing.outputs.test_transaction_module }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

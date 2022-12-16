@@ -44,10 +44,12 @@ jobs:
           filterOutClosed: true
           filterOutDraft: true
             
-      - name: get file changes
+      - if: contains(steps.comment.-branch.outputs.head_ref, 'dev')
+        name: get file changes
         run: |
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
+          echo "" > coverage/coverage.txt
           for file in $changedFiles 
           do
             echo "$file : $file % blabla of blabla" >> coverage/coverage.txt

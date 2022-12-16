@@ -27,7 +27,7 @@ jobs:
           for file in $changedFiles 
           do
             finalString="$file : $file % blabla of blabla"
-            echo "::set-output name=test_$file::$finalString"
+            echo "::set-output name=$file::$finalString"
             echo "result_$file=$finalString" >> GITHUB_OUTPUT
           done
         id: get-app-testing
@@ -75,13 +75,9 @@ jobs:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: | 
             Job Summary
-            
-            ${{ steps.get-app-testing.outputs.result_auth_module }}
-            ${{ steps.get-app-testing.outputs.result_transaction_module }}
 
-
-            ${{ steps.get-app-testing.outputs.test_auth_module }}
-            ${{ steps.get-app-testing.outputs.test_transaction_module }}
+            ${{ steps.get-app-testing.outputs.auth_module }}
+            ${{ steps.get-app-testing.outputs.transaction_module }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

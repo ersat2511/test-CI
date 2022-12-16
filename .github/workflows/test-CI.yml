@@ -54,6 +54,12 @@ jobs:
           done
         id: get-app-testing
 
+      - name: echo output changed file
+        run: |
+          echo ${{ steps.get-app-testing.outputs }}
+          echo ${{ steps.get-app-testing.outputs.result_auth_module }}
+          echo ${{ steps.get-app-testing.outputs.result_transaction_module }}
+
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2
         env:

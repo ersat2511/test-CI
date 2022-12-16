@@ -32,7 +32,11 @@ jobs:
 
       - name: echo output changed file
         run: |
-          printf "this is outputs ${{ steps.get-app-testing.outputs }}"
+          echo this is outputs ${{ steps.get-app-testing.outputs }}
+          for text in ${{ steps.get-app-testing.outputs }}
+          do
+            echo $text
+          done
           echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
           echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
 

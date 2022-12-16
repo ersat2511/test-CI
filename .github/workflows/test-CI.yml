@@ -56,9 +56,9 @@ jobs:
 
       - name: echo output changed file
         run: |
-          echo ${{ steps.get-app-testing.outputs }}
-          echo ${{ steps.get-app-testing.outputs.result_auth_module }}
-          echo ${{ steps.get-app-testing.outputs.result_transaction_module }}
+          echo this is outputs ${{ steps.get-app-testing.outputs }}
+          echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
+          echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v2

@@ -50,7 +50,7 @@ jobs:
           changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
           for file in $changedFiles 
           do
-            "$file : $file % blabla of blabla"  >> coverage/coverage.txt
+            echo "$file : $file % blabla of blabla"  >> coverage/coverage.txt
           done
           coverageFile="$(cat coverage/coverage.txt)"
           coverageFile="${coverageFile//'%'/'%25'}"

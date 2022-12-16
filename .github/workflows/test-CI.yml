@@ -44,7 +44,7 @@ jobs:
           filterOutClosed: true
           filterOutDraft: true
             
-      - if: contains(steps.comment.-branch.outputs.head_ref, 'dev')
+      - if: contains(${{steps.comment.-branch.outputs.head_ref}}, 'dev')
         name: get file changes
         run: |
           git fetch origin ${{ steps.comment-branch.outputs.base_ref }}

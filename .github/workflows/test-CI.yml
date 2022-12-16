@@ -32,7 +32,7 @@ jobs:
 
       - name: echo output changed file
         run: |
-          echo this is outputs fromJson(${{ steps.get-app-testing.outputs }})
+          echo this is outputs toJson(${{ steps.get-app-testing.outputs }})
           echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
           echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
 

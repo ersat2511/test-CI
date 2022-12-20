@@ -76,8 +76,7 @@ jobs:
           body: | 
             Job Summary
 
-            ${{ steps.get-app-testing.outputs.auth_module }}
-            ${{ steps.get-app-testing.outputs.transaction_module }}
+              ${{ join(steps.get-app-testing.outputs.*, '\n') }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

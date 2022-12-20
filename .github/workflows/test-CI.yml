@@ -76,7 +76,7 @@ jobs:
           body: | 
             Job Summary
 
-              ${{ join(steps.get-app-testing.outputs.*, ' \\n ') }}
+            ${{ join(steps.get-app-testing.outputs.*, "\n") }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

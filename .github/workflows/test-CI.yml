@@ -73,10 +73,10 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
-          body: |
+          body: >
             Job Summary
 
-            ${{ join(steps.get-app-testing.outputs.*, "\") }}
+            ${{ join(steps.get-app-testing.outputs.*, "\n") }}
 
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

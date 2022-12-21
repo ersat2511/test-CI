@@ -20,17 +20,31 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
           
-      - name: get file changes
+      # - name: get file changes
+      #   run: |
+      #     git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
+      #     changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
+      #     for file in $changedFiles 
+      #     do
+      #       finalString="$file : $file % blabla of blabla"
+      #       echo "::set-output name=$file::$finalString"
+      #       echo "result_$file=$finalString" >> GITHUB_OUTPUT
+      #     done
+      #   id: get-app-testing
+
+      - name: get all unit test
         run: |
-          git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
-          changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
-          for file in $changedFiles 
+          melos test_coverage_all
+          folders=$(dir modules/features)
+          for folder in folders
           do
             finalString="$file : $file % blabla of blabla"
+            echo "$folder=$finalString" >> GITHUB_OUTPUT
             echo "::set-output name=$file::$finalString"
-            echo "result_$file=$finalString" >> GITHUB_OUTPUT
           done
         id: get-app-testing
+        
+
 
       - name: echo output changed file
         run: |

@@ -34,13 +34,16 @@ jobs:
 
       - name: get all unit test
         run: |
-          echo folders=$(ls -D modules)
-          for folder in folders
+          for folder in */modules
           do
+            echo $folder
             finalString="$folder : $folder % blabla of blabla"
             echo "$folder=$finalString" >> GITHUB_OUTPUT
             echo "::set-output name=$folder::$finalString"
           done
+            finalString="agriaku_mitra : apps % blabla of blabla"
+            echo "$agriaku_mitra=$finalString" >> GITHUB_OUTPUT
+            echo "::set-output name=agriaku_mitra::$finalString"
         id: get-app-testing
 
       - name: echo output changed file

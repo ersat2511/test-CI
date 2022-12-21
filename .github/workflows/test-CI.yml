@@ -34,7 +34,6 @@ jobs:
 
       - name: get all unit test
         run: |
-          melos test_coverage_all
           folders=$(dir modules/features)
           for folder in folders
           do

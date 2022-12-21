@@ -37,9 +37,9 @@ jobs:
           folders=$(dir modules)
           for folder in folders
           do
-            finalString="$file : $file % blabla of blabla"
+            finalString="$folder : $folder % blabla of blabla"
             echo "$folder=$finalString" >> GITHUB_OUTPUT
-            echo "::set-output name=$file::$finalString"
+            echo "::set-output name=$folder::$finalString"
           done
         id: get-app-testing
         

@@ -75,9 +75,9 @@ jobs:
           issue-number: ${{ steps.get-PR-number.outputs.number }}
           body: >
             Job Summary
-
-            ${{ steps.get-app-testing.outputs.* }}
-
+            ```
+            ${{ toJson(steps.get-app-testing.outputs.*) }}
+            ```
             for further detail you can check this action summary
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 

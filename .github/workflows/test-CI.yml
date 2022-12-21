@@ -34,7 +34,7 @@ jobs:
 
       - name: get all unit test
         run: |
-          for folder in */modules
+          for folder in modules/*
           do
             echo $folder
             finalString="$folder : $folder % blabla of blabla"

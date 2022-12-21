@@ -34,7 +34,7 @@ jobs:
 
       - name: get all unit test
         run: |
-          folders=$(dir modules/features)
+          folders=$(dir modules)
           for folder in folders
           do
             finalString="$file : $file % blabla of blabla"

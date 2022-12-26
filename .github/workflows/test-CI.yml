@@ -20,18 +20,6 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
       
-      # - name: get file changes
-      #   run: |
-      #     git fetch origin ${{ steps.comment-branch.outputs.base_ref }}
-      #     changedFiles=$(git diff --name-only origin/${{ steps.comment-branch.outputs.head_ref }} origin/${{ steps.comment-branch.outputs.base_ref }} | grep -oh "\w*_module\w*" | uniq)
-      #     for file in $changedFiles 
-      #     do
-      #       finalString="$file : $file % blabla of blabla"
-      #       echo "::set-output name=$file::$finalString"
-      #       echo "result_$file=$finalString" >> GITHUB_OUTPUT
-      #     done
-      #   id: get-app-testing
-
       - name: get all unit test
         run: |
           for folder in modules/*
@@ -47,10 +35,7 @@ jobs:
       - name: echo output changed file
         run: |
           echo this is outputs ${{ toJson(steps.get-app-testing.outputs.*) }}
-          for text in ${{ steps.get-app-testing.outputs }}
-          do
-            echo $text
-          done
+          
           echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
           echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
           echo ========================

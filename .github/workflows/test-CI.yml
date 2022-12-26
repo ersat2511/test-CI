@@ -41,7 +41,7 @@ jobs:
             echo "$folder=$finalString" >> $GITHUB_OUTPUT
           done
             finalString="agriaku_mitra : apps % blabla of blabla"
-            echo "$agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
+            echo "agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
         id: get-app-testing
 
       - name: echo output changed file

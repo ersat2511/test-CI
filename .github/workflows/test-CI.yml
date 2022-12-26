@@ -32,16 +32,6 @@ jobs:
             echo "agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
         id: get-app-testing
 
-      - name: echo output changed file
-        run: |
-          echo this is outputs ${{ toJson(steps.get-app-testing.outputs.*) }}
-          
-          echo this is auth_module ${{ steps.get-app-testing.outputs.result_auth_module }}
-          echo this is transaction_module ${{ steps.get-app-testing.outputs.result_transaction_module }}
-          echo ========================
-          echo this is auth_module ${{ steps.get-app-testing.outputs.test_auth_module }}
-          echo this is transaction_module ${{ steps.get-app-testing.outputs.test_transaction_module }}
-
       # - uses: actions/setup-java@v1
       #   with:
       #     java-version: "12.x"

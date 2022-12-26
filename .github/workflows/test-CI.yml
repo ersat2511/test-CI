@@ -43,12 +43,11 @@ jobs:
           done
             finalString="agriaku_mitra : apps % blabla of blabla"
             echo "$agriaku_mitra=$finalString" >> GITHUB_OUTPUT
-            echo "::set-output name=agriaku_mitra::$finalString"
         id: get-app-testing
 
       - name: echo output changed file
         run: |
-          echo this is outputs ${{ steps.get-app-testing.outputs }}
+          echo this is outputs ${{ toJson(steps.get-app-testing.outputs.*) }}
           for text in ${{ steps.get-app-testing.outputs }}
           do
             echo $text

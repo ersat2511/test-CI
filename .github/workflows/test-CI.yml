@@ -39,7 +39,6 @@ jobs:
             echo $folder
             finalString="$folder : $folder % blabla of blabla"
             echo "$folder=$finalString" >> GITHUB_OUTPUT
-            echo "::set-output name=$folder::$finalString"
           done
             finalString="agriaku_mitra : apps % blabla of blabla"
             echo "$agriaku_mitra=$finalString" >> GITHUB_OUTPUT

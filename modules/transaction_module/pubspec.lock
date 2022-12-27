@@ -36,7 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-<<<<<<<< HEAD:modules/transaction_module/pubspec.lock
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -44,8 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-========
->>>>>>>> a0275a1ed33cbfdaf0680a20e52fb627a62c1e56:modules/auth_module/pubspec.lock
   fake_async:
     dependency: transitive
     description:

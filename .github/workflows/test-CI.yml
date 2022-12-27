@@ -83,4 +83,3 @@ jobs:
     steps:
       - name: build apk
         run: flutter build apk
-

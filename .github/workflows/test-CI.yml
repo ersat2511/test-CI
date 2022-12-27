@@ -82,4 +82,4 @@ jobs:
     needs: [build]
     steps:
       - name: build apk
-        uses: flutter run build
+        run: flutter run build

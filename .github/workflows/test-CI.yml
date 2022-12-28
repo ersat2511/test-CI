@@ -23,10 +23,12 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
+          cache: 'gradle'
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.0.0"
+          cache: true
       
       - name: Install lcov
         uses: hrishikesh-kadam/setup-lcov@v1
@@ -42,5 +44,18 @@ jobs:
       - name: trial composite
         uses: ./.github/actions/test-composite
 
-      - name: check reusable workflow
-        uses: ./.github/workflows/test-reusable-workflow.yml
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: [dev,staging,production]
+    steps:
+    - name: echo current running matrix
+      run: echo ${{ matrix.test }}
+
+    - name: check flutter version
+      run: flutter --version
+    
+    - name: check lcov version
+      run: lcov -v

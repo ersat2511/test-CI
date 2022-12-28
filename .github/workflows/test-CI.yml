@@ -39,7 +39,7 @@ jobs:
       - name: define matrix
         id: get-matrix
         run: |
-          if ["$(startsWith(inputs.base-ref, 'main/'))"]; then
+          if ["$(startsWith(steps.comment-branch.outputs.base-ref, 'main/'))"]; then
             echo "matrix=["dev","staging","production"]" >> $GITHUB_OUTPUT
           else
             echo "matrix=[dev]" >> $GITHUB_OUTPUT

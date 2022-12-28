@@ -51,6 +51,15 @@ jobs:
       matrix:
         test: [dev,staging,production]
     steps:
+    - uses: actions/setup-java@v1
+      with:
+        java-version: "12.x"
+        cache: 'gradle'
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "3.0.0"
+        cache: true
     - name: echo current running matrix
       run: echo ${{ matrix.test }}
 

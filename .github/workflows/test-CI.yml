@@ -16,13 +16,13 @@ jobs:
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          ref: main
+          ref: $ {{ steps.comment-branch.outputs.base_ref }}
 
       - uses: actions/setup-java@v1
         with:
@@ -44,7 +44,7 @@ jobs:
           fi
       
       - name: trial composite
-        uses: ./.github/actions/test-composite.yml@main
+        uses: ./.github/actions/test-composite.yml
   
   # build:
   #   needs: [setup]

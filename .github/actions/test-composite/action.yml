@@ -1,12 +1,16 @@
 name: "test"
-strategy:
-  matrix:
-    flavor: [dev,staging,production]
-steps:
+description: 'test'
+inputs:
+  test_input:
+    required: false
+    description: just a test
+runs:
   using: "composite"
   steps:
     - name: echo flutter version
+      shell: bash
       run: echo flutter --version
     
     - name: echo lcov
+      shell: bash
       run: lcov -v

@@ -44,7 +44,7 @@ jobs:
           fi
       
       - name: trial composite
-        uses: ./.github/actions/test-composite.yml
+        uses: ./.github/actions/test-composite/action.yml
   
   # build:
   #   needs: [setup]

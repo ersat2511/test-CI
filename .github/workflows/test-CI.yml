@@ -9,6 +9,12 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
+    outputs:
+      head_ref: ${{ steps.comment-branch.outputs.head_ref}}
+      base_ref: ${{ steps.comment-branch.outputs.base_ref}}
+      flutter_path: ${{ steps.get-flutter.outputs.CACHE_PATH }}
+      flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
+      get-matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
       - name: echo github credentials
         run: pwd
@@ -20,6 +26,42 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
+      - uses: subosito/flutter-action@v2
+        id: get-flutter
+        with:
+          flutter-version: "3.0.0"
+          cache: true
+          key: flutter-latest
+      
+      - name: Install lcov
+        uses: hrishikesh-kadam/setup-lcov@v1
+      
+      - name: define matrix
+        id: get-matrix
+        run: |
+          if ["$()"]; then
+            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
+          else
+            echo "matrix=[dev]" >> $GITHUB_OUTPUT
+          fi
+      
+      # - name: trial composite
+      #   uses: ./.github/actions/test-composite
+
+  test:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: ${{ fromJson( ${{ needs.setup.outputs.matrix }} ) }}
+    steps:
+      # - name: echo matric
+      # - uses: actions/checkout@v3
+      #   # id:
+      #   if: ${{  }}
+      #   with:
+      #     ref: ${{ needs.setup.outputs.head_ref }}
+      
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
@@ -30,41 +72,9 @@ jobs:
           flutter-version: "3.0.0"
           cache: true
       
-      - name: Install lcov
-        uses: hrishikesh-kadam/setup-lcov@v1
-      
-      - name: define matrix
-        run: |
-          if ["$()"]; then
-            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
-          else
-            echo "matrix=[dev,staging]" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: trial composite
-        uses: ./.github/actions/test-composite
+      - name: echo current running matrix
+        run: echo ${{ matrix.test }}
 
-  test:
-    needs: [setup]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        test: [dev,staging,production]
-    steps:
-    - uses: actions/setup-java@v1
-      with:
-        java-version: "12.x"
-        cache: 'gradle'
+      - name: check flutter version
+        run: flutter --version
 
-    - uses: subosito/flutter-action@v2
-      with:
-        flutter-version: "3.0.0"
-        cache: true
-    - name: echo current running matrix
-      run: echo ${{ matrix.test }}
-
-    - name: check flutter version
-      run: flutter --version
-    
-    - name: check lcov version
-      run: lcov -v

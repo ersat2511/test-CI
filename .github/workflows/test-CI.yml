@@ -43,4 +43,4 @@ jobs:
         uses: ./.github/actions/test-composite
 
       - name: check reusable workflow
-        uses: ./.github/workflow/test-reusable-workflow.yml
+        uses: ./.github/workflows/test-reusable-workflow.yml

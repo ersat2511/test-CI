@@ -20,6 +20,10 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"

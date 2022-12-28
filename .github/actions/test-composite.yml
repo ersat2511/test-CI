@@ -1,0 +1,12 @@
+name: "test"
+strategy:
+  matrix:
+    flavor: [dev,staging,production]
+steps:
+  using: "composite"
+  steps:
+    - name: echo flutter version
+      run: echo flutter --version
+    
+    - name: echo lcov
+      run: lcov -v

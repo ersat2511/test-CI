@@ -30,21 +30,31 @@ jobs:
       
       - name: Install lcov
         uses: hrishikesh-kadam/setup-lcov@v1
+      
+      - name: define matrix
+        run: |
+          if ["$()"]; then
+            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
+          else
+            echo "matrix=[dev,staging]" >> $GITHUB_OUTPUT
+          fi
   
   build:
     needs: [setup]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test: [a,b,c]
+        test: [dev,staging,production]
     steps:
     - name: echo current running matrix
       run: echo ${{ matrix.test }}
 
-    - name: Analyze
-      working-directory: ./app
-      run: flutter analyze
+    - name: check flutter version
+      run: flutter --version
     
+    - name: check lcov version
+      run: lcov -v
+
     - name: get all unit test
       run: |
         for folder in modules/*
@@ -56,7 +66,6 @@ jobs:
           finalString="agriaku_mitra : apps % blabla of blabla"
           echo "agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
       id: get-app-testing
-
 
     - name: get PR number
       uses: 8BitJonny/gh-get-current-pr@2.1.0

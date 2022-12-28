@@ -39,29 +39,19 @@ jobs:
       - name: define matrix
         id: get-matrix
         run: |
-          if ["$()"]; then
-            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
+          if ["$(startsWith(inputs.base-ref, 'main/'))"]; then
+            echo "matrix=["dev","staging","production"]" >> $GITHUB_OUTPUT
           else
             echo "matrix=[dev]" >> $GITHUB_OUTPUT
           fi
-      
-      # - name: trial composite
-      #   uses: ./.github/actions/test-composite
 
   test:
     needs: [setup]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test: ${{ fromJson( ${{ needs.setup.outputs.matrix }} ) }}
+        test: ${{ fromJson(needs.setup.outputs.get-matrix) }}
     steps:
-      # - name: echo matric
-      # - uses: actions/checkout@v3
-      #   # id:
-      #   if: ${{  }}
-      #   with:
-      #     ref: ${{ needs.setup.outputs.head_ref }}
-      
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"

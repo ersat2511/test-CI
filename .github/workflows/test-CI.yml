@@ -37,17 +37,14 @@ jobs:
         uses: hrishikesh-kadam/setup-lcov@v1
       
       - name: define matrix
-        if: ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }}
+        id: get-matrix
         run: |
-            echo "matrix=["dev","staging","production"]" >> $GITHUB_OUTPUT
-        id: get-matrix
+          if [ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} == true ]; then
+            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
+          else
+            echo "matrix=['dev']" >> $GITHUB_OUTPUT
+          fi
 
-      - name: define matrix
-        if: ${{ !startsWith(steps.comment-branch.outputs.base-ref, 'main/') }}
-        run: |    
-            echo "matrix=[dev]" >> $GITHUB_OUTPUT
-        id: get-matrix
-          
   test:
     needs: [setup]
     runs-on: ubuntu-latest

@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/actions/test-composite
 
   test:
-    needs: [build]
+    needs: [setup]
     runs-on: ubuntu-latest
     strategy:
       matrix:

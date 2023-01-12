@@ -30,7 +30,7 @@ jobs:
           if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
             echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
           else
-            echo "matrix=['dev']" >> $GITHUB_OUTPUT
+            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
           fi
 
   test1:

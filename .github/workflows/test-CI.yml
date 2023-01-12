@@ -32,8 +32,26 @@ jobs:
             echo "matrix=['dev']" >> $GITHUB_OUTPUT
           fi
 
-  test:
+  test1:
     needs: [setup]
+    runs-on: ubuntu-latest
+    outputs: 
+      flavor: ${{ matrix.flavor }}
+    strategy:
+      matrix:
+        flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
+    steps:
+      # - name: trim string flavor
+      #   id: get-trimmed-flavor
+      #   run: |
+      #     echo flavor=$(echo ${{ matrix.flavor }} | sed "s/'//g") >> $GITHUB_OUTPUT
+      
+      - name: echo current running matrix
+        run: |
+          echo ini adalah flavor test 1 --${{ matrix.flavor }}
+  
+  test2:
+    needs: [test1]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,4 +64,4 @@ jobs:
       
       - name: echo current running matrix
         run: |
-          echo ${{ matrix.flavor }}
+          echo ini adalah flavor test 2 --${{ needs.test1.outputs.flavor }}

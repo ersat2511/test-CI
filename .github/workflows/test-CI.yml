@@ -65,6 +65,7 @@ jobs:
     strategy:
       matrix:
         flavor: ${{ fromJson(needs.test1.outputs.get-matrix) }}
+    if: ${{ ( (needs.setup.result == 'success' && needs.setup.result != 'success') || (needs.setup.result == 'success' && needs.setup.result == 'success') ) }}
     steps:
       - name: echo current running matrix ${{ matrix.flavor }} --${{ needs.test1.outputs.flavor }} ${{ needs.setup.outputs.base_ref }} 
         run: |

@@ -54,9 +54,9 @@ jobs:
         id: get-matrix
         run: |
           if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
-            echo "matrix=['1','2']" >> $GITHUB_OUTPUT
+            echo "matrix=['asd','qwe']" >> $GITHUB_OUTPUT
           else
-            echo "matrix=['1']" >> $GITHUB_OUTPUT
+            echo "matrix=['asd']" >> $GITHUB_OUTPUT
           fi
   
   test2:

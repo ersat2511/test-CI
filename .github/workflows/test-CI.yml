@@ -37,6 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs: 
       flavor: ${{ matrix.flavor }}
+      get-matrix: ${{ steps.get-matrix.outputs.matrix }}
+
     strategy:
       matrix:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
@@ -64,13 +66,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flavor: ${{ fromJson(needs.test1.outputs.flavor) }}
+        flavor: ${{ fromJson(needs.test1.outputs.get-matrix) }}
     steps:
-      # - name: trim string flavor
-      #   id: get-trimmed-flavor
-      #   run: |
-      #     echo flavor=$(echo ${{ matrix.flavor }} | sed "s/'//g") >> $GITHUB_OUTPUT
-      
-      - name: echo current running matrix
+      - name: echo current running matrix ${{ matrix.flavor }}
         run: |
-          echo ini adalah flavor test 2 --${{ needs.test1.outputs.flavor }}
+          echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}

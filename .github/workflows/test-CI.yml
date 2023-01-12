@@ -68,6 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:
-      - name: echo current running matrix --${{ join(needs.*.outputs.test) }}
+      - name: echo current running matrix --${{ join(needs.*.outputs.test, ',') }}
         run: |
           echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}

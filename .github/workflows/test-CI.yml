@@ -15,6 +15,7 @@ jobs:
       flutter_path: ${{ steps.get-flutter.outputs.CACHE_PATH }}
       flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
       get-matrix: ${{ steps.get-matrix.outputs.matrix }}
+    
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
@@ -64,8 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flavor: ${{ fromJson(needs.test1.outputs.get-matrix) }}
-    if: ${{ ( (needs.setup.result == 'success' && needs.setup.result != 'success') || (needs.setup.result == 'success' && needs.setup.result == 'success') ) }}
+        flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
+    if: ${{ always() }}
     steps:
       - name: echo current running matrix ${{ matrix.flavor }} --${{ needs.test1.outputs.flavor }} ${{ needs.setup.outputs.base_ref }} 
         run: |

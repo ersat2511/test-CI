@@ -62,7 +62,7 @@ jobs:
           fi
   
   test2:
-    needs: [test1]
+    needs: [setup, test1]
     runs-on: ubuntu-latest
     strategy:
       matrix:

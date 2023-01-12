@@ -49,6 +49,15 @@ jobs:
       - name: echo current running matrix
         run: |
           echo ini adalah flavor test 1 --${{ matrix.flavor }}
+      
+      - name: define matrix
+        id: get-matrix
+        run: |
+          if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
+            echo "matrix=['1','2']" >> $GITHUB_OUTPUT
+          else
+            echo "matrix=['1']" >> $GITHUB_OUTPUT
+          fi
   
   test2:
     needs: [test1]

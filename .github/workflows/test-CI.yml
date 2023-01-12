@@ -27,9 +27,9 @@ jobs:
         id: get-matrix
         run: |
           if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
-            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
+            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
           else
-            echo "matrix=[dev]" >> $GITHUB_OUTPUT
+            echo "matrix=['dev']" >> $GITHUB_OUTPUT
           fi
 
   test:
@@ -44,5 +44,12 @@ jobs:
           flutter-version: "3.0.0"
           cache: true
       
+      - name: trim string flavor
+        id: get-trimmed-flavor
+        run: |
+          echo "flavor=$(echo ${{ needs.build.outputs.flavor }} | sed 's/'//g')" >> $GITHUB_OUTPUT
+      
       - name: echo current running matrix
-        run: echo ${{ matrix.test }}
+        run: |
+          echo ${{ matrix.test }}
+          echo ${{ steps.get-trimmed-flavor.outputs.flavor }}

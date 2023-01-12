@@ -39,12 +39,11 @@ jobs:
       matrix:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
     steps:
-      - name: trim string flavor
-        id: get-trimmed-flavor
-        run: |
-          echo flavor=$(echo ${{ matrix.flavor }} | sed "s/'//g") >> $GITHUB_OUTPUT
+      # - name: trim string flavor
+      #   id: get-trimmed-flavor
+      #   run: |
+      #     echo flavor=$(echo ${{ matrix.flavor }} | sed "s/'//g") >> $GITHUB_OUTPUT
       
       - name: echo current running matrix
         run: |
           echo ${{ matrix.flavor }}
-          echo ${{ steps.get-trimmed-flavor.outputs.flavor }}

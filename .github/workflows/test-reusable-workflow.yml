@@ -16,7 +16,7 @@ jobs:
       run: flutter --version
     
     - name: check lcov version
-      run: lcov -v
+      run: lcov -v  
 
     # - name: get all unit test
     #   run: |

@@ -16,9 +16,6 @@ jobs:
       flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
       get-matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
-      - name: echo github credentials
-        run: pwd
-
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
@@ -26,23 +23,13 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - uses: subosito/flutter-action@v2
-        id: get-flutter
-        with:
-          flutter-version: "3.0.0"
-          cache: true
-          key: flutter-latest
-      
-      - name: Install lcov
-        uses: hrishikesh-kadam/setup-lcov@v1
-      
       - name: define matrix
         id: get-matrix
         run: |
-          if [ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} == true ]; then
-            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
+          if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
+            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
           else
-            echo "matrix=['dev']" >> $GITHUB_OUTPUT
+            echo "matrix=[dev]" >> $GITHUB_OUTPUT
           fi
 
   test:
@@ -50,13 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test: ${{ fromJson(needs.setup.outputs.get-matrix) }}
+        flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
     steps:
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-          cache: 'gradle'
-
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.0.0"
@@ -64,7 +46,3 @@ jobs:
       
       - name: echo current running matrix
         run: echo ${{ matrix.test }}
-
-      - name: check flutter version
-        run: flutter --version
-

@@ -37,7 +37,7 @@ jobs:
     needs: [setup]
     runs-on: ubuntu-latest
     outputs: 
-      test: ${{ steps.test.outputs.test }}
+      test: ${{ join(steps.test.outputs.*, ' ') }}
 
     strategy:
       matrix:
@@ -60,7 +60,7 @@ jobs:
       - name: store variable
         id: test
         run: |
-          echo "test=${{matrix.flavor}}" >> $GITHUB_OUTPUT
+          echo "${{matrix.flavor}}=${{matrix.flavor}}" >> $GITHUB_OUTPUT
 
   
   test2:
@@ -71,3 +71,7 @@ jobs:
       - name: echo current running matrix --${{ join(needs.*.outputs.test, ',') }}
         run: |
           echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}
+          for test in ${{ fromJson(needs.setup.outputs.get-matrix) }};
+          do
+            echo asik
+          done

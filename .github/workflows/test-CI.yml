@@ -39,11 +39,6 @@ jobs:
       matrix:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
     steps:
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.0.0"
-          cache: true
-      
       - name: trim string flavor
         id: get-trimmed-flavor
         run: |
@@ -51,5 +46,5 @@ jobs:
       
       - name: echo current running matrix
         run: |
-          echo ${{ matrix.test }}
+          echo ${{ matrix.flavor }}
           echo ${{ steps.get-trimmed-flavor.outputs.flavor }}

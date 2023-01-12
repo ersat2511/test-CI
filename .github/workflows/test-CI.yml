@@ -68,6 +68,6 @@ jobs:
       matrix:
         flavor: ${{ fromJson(needs.test1.outputs.get-matrix) }}
     steps:
-      - name: echo current running matrix ${{ matrix.flavor }} --${{ needs.test1.outputs.flavor }}
+      - name: echo current running matrix ${{ matrix.flavor }} --${{ needs.test1.outputs.flavor }} ${{ needs.setup.outputs.base_ref }}
         run: |
           echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}

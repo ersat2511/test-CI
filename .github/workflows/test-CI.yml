@@ -47,7 +47,7 @@ jobs:
       - name: trim string flavor
         id: get-trimmed-flavor
         run: |
-          echo "flavor=$(echo ${{ needs.build.outputs.flavor }} | sed 's/'//g')" >> $GITHUB_OUTPUT
+          echo "flavor=$(echo ${{ matrix.flavor }} | sed 's/'//g')" >> $GITHUB_OUTPUT
       
       - name: echo current running matrix
         run: |

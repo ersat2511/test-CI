@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flavor: ${{ fromJson(needs.setup.outputs.flavor) }}
+        flavor: ${{ fromJson(needs.test1.outputs.flavor) }}
     steps:
       # - name: trim string flavor
       #   id: get-trimmed-flavor

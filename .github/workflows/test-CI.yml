@@ -53,7 +53,7 @@ jobs:
 
       - name: echo version
         run: |
-          echo ${{ step.version.outputs.data }}
+          echo ${{ steps.version.outputs.data }}
       - name: echo current running matrix
         run: |
           echo ini adalah flavor test 1 --${{ matrix.flavor }}

@@ -44,6 +44,10 @@ jobs:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.setup.outputs.head_ref }}
+
       - name: Get App Version from pubspec.yaml
         id: version
         uses: jbutcher5/read-yaml@1.6

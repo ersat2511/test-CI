@@ -9,7 +9,7 @@ runs:
   steps:
     - name: echo flutter version
       shell: bash
-      run: echo flutter --version
+      run: flutter --version
     
     - name: echo lcov
       shell: bash

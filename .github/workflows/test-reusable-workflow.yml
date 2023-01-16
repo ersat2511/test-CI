@@ -1,0 +1,58 @@
+name: test reusable
+on:
+  workflow_call
+jobs:
+  build:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: [dev,staging,production]
+    steps:
+    - name: echo current running matrix
+      run: echo ${{ matrix.test }}
+
+    - name: check flutter version
+      run: flutter --version
+    
+    - name: check lcov version
+      run: lcov -v  
+
+    # - name: get all unit test
+    #   run: |
+    #     for folder in modules/*
+    #     do
+    #       echo $folder
+    #       finalString="$folder : $folder % blabla of blabla"
+    #       echo "$folder=$finalString" >> $GITHUB_OUTPUT
+    #     done
+    #       finalString="agriaku_mitra : apps % blabla of blabla"
+    #       echo "agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
+    #   id: get-app-testing
+
+    # - name: get PR number
+    #   uses: 8BitJonny/gh-get-current-pr@2.1.0
+    #   id: get-PR-number
+    #   with:
+    #     github-token: ${{ github.token }}
+    #     sha: ${{ steps.comment-branch.outputs.head_sha }}
+    #     filterOutClosed: true
+    #     filterOutDraft: true
+      
+    # - name: Create comment
+    #   uses: peter-evans/create-or-update-comment@v2
+    #   with:
+    #     issue-number: ${{ steps.get-PR-number.outputs.number }}
+    #     body: |
+    #       Job Summary
+          
+    #         ${{ toJson(steps.get-app-testing.outputs.*) }}
+          
+    #       for further detail you can check this action summary
+    #       https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+    # - name: upload artefact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #       name: coverage-details
+    #       path: ./*/coverage

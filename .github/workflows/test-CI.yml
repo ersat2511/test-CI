@@ -9,10 +9,14 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
+    outputs:
+      head_ref: ${{ steps.comment-branch.outputs.head_ref}}
+      base_ref: ${{ steps.comment-branch.outputs.base_ref}}
+      flutter_path: ${{ steps.get-flutter.outputs.CACHE_PATH }}
+      flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
+      get-matrix: ${{ steps.get-matrix.outputs.matrix }}
+    
     steps:
-      - name: echo github credentials
-        run: pwd
-
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
@@ -20,79 +24,64 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
+      - name: define matrix
+        id: get-matrix
+        run: |
+          if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
+            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
+          else
+            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
+          fi
 
-      - uses: subosito/flutter-action@v2
+  test1:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    outputs: 
+      test: ${{ join(steps.test.outputs.*, ' ') }}
+
+    strategy:
+      matrix:
+        flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
+
+    steps:
+      - name: Get App Version from pubspec.yaml
+        id: version
+        uses: jbutcher5/read-yaml@1.6
         with:
-          flutter-version: "3.0.0"
-      
-      - name: Install lcov
-        uses: hrishikesh-kadam/setup-lcov@v1
+          file: './app/pubspec.yaml'
+          key-path: '["version"]'
+
+      - name: echo version
+        run: |
+          echo ${{ step.version.outputs.data }}
+      - name: echo current running matrix
+        run: |
+          echo ini adalah flavor test 1 --${{ matrix.flavor }}
       
       - name: define matrix
+        id: get-matrix
         run: |
-          if ["$()"]; then
-            echo "matrix=[dev,staging,production]" >> $GITHUB_OUTPUT
+          if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
+            echo "matrix=['asd','qwe']" >> $GITHUB_OUTPUT
           else
-            echo "matrix=[dev,staging]" >> $GITHUB_OUTPUT
+            echo "matrix=['asd']" >> $GITHUB_OUTPUT
           fi
       
-      - name: trial composite
-        uses: ./.github/actions/test-composite/action.yml
+      - name: store variable
+        id: test
+        run: |
+          echo "${{matrix.flavor}}=${{matrix.flavor}}" >> $GITHUB_OUTPUT
+
   
-  # build:
-  #   needs: [setup]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       test: [dev,staging,production]
-  #   steps:
-  #   - name: echo current running matrix
-  #     run: echo ${{ matrix.test }}
-
-  #   - name: check flutter version
-  #     run: flutter --version
-    
-  #   - name: check lcov version
-  #     run: lcov -v
-
-  #   - name: get all unit test
-  #     run: |
-  #       for folder in modules/*
-  #       do
-  #         echo $folder
-  #         finalString="$folder : $folder % blabla of blabla"
-  #         echo "$folder=$finalString" >> $GITHUB_OUTPUT
-  #       done
-  #         finalString="agriaku_mitra : apps % blabla of blabla"
-  #         echo "agriaku_mitra=$finalString" >> $GITHUB_OUTPUT
-  #     id: get-app-testing
-
-  #   - name: get PR number
-  #     uses: 8BitJonny/gh-get-current-pr@2.1.0
-  #     id: get-PR-number
-  #     with:
-  #       github-token: ${{ github.token }}
-  #       sha: ${{ steps.comment-branch.outputs.head_sha }}
-  #       filterOutClosed: true
-  #       filterOutDraft: true
-      
-  #   - name: Create comment
-  #     uses: peter-evans/create-or-update-comment@v2
-  #     with:
-  #       issue-number: ${{ steps.get-PR-number.outputs.number }}
-  #       body: |
-  #         Job Summary
-          
-  #           ${{ toJson(steps.get-app-testing.outputs.*) }}
-          
-  #         for further detail you can check this action summary
-  #         https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-  #   - name: upload artefact
-  #     uses: actions/upload-artifact@v3
-  #     with:
-  #         name: coverage-details
-  #         path: ./*/coverage
+  test2:
+    needs: [setup, test1]
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
+      - name: echo current running matrix --${{ join(needs.*.outputs.test, ',') }}
+        run: |
+          echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}
+          for test in JSON([1,2,3])
+          do
+            echo asik
+          done

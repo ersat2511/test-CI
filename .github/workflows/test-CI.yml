@@ -44,6 +44,16 @@ jobs:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
 
     steps:
+      - name: Get App Version from pubspec.yaml
+        id: version
+        uses: jbutcher5/read-yaml@1.6
+        with:
+          file: './app/pubspec.yaml'
+          key-path: '["version"]'
+
+      - name: echo version
+        run: |
+          echo ${{ step.version.outputs.data }}
       - name: echo current running matrix
         run: |
           echo ini adalah flavor test 1 --${{ matrix.flavor }}
@@ -71,7 +81,7 @@ jobs:
       - name: echo current running matrix --${{ join(needs.*.outputs.test, ',') }}
         run: |
           echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}
-          for test in ${{ fromJson(needs.setup.outputs.get-matrix) }};
+          for test in JSON([1,2,3])
           do
             echo asik
           done

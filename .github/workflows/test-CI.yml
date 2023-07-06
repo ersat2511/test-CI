@@ -48,6 +48,11 @@ jobs:
         with:
           ref: ${{ needs.setup.outputs.head_ref }}
 
+      - name: find average coverage
+        run: |
+          echo average_coverage="average mitra apps : $(echo test))" >> $GITHUB_OUTPUT
+        id: get-app-average-coverage
+
       - name: Get App Version from pubspec.yaml
         id: version
         uses: jbutcher5/read-yaml@1.6

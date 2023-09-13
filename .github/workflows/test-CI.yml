@@ -62,7 +62,7 @@ jobs:
     if: ${{ always() }}
     steps:
       - name: find average coverage
-      run: |
-        echo $(cat coverage_average)
-      id: get-app-coverage-average
+        run: |
+          echo $(cat coverage_average)
+        id: get-app-coverage-average
 

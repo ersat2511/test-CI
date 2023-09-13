@@ -44,6 +44,15 @@ jobs:
         flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
 
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.setup.outputs.head_ref }}
+
+      - name: find average coverage
+        run: |
+          echo average_coverage="average mitra apps : $(echo test))" >> $GITHUB_OUTPUT
+        id: get-app-average-coverage
+
       - name: Get App Version from pubspec.yaml
         id: version
         uses: jbutcher5/read-yaml@1.6
@@ -53,7 +62,7 @@ jobs:
 
       - name: echo version
         run: |
-          echo ${{ step.version.outputs.data }}
+          echo ${{ steps.version.outputs.data }}
       - name: echo current running matrix
         run: |
           echo ini adalah flavor test 1 --${{ matrix.flavor }}

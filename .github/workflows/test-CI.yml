@@ -56,11 +56,6 @@ jobs:
           echo $(cat coverage_average)
         id: get-app-coverage-average
 
-      - name: find average coverage
-        run: |
-          echo average_coverage="average mitra apps : $(echo ${{ steps.get-coverage-average.outputs.coverage_average }}))"
-        id: get-app-average-coverage
-
   test2:
     runs-on: ubuntu-latest
     needs: [setup,test1]

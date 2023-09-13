@@ -8,7 +8,7 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'build' || github.event.comment.body == 'deploy')) }}
+    if: ${{ (github.event.issue.pull_request && (github.event.comment.body == 'test')) }}
     outputs:
       head_ref: ${{ steps.comment-branch.outputs.head_ref}}
       base_ref: ${{ steps.comment-branch.outputs.base_ref}}

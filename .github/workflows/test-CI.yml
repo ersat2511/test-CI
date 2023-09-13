@@ -16,7 +16,6 @@ jobs:
       flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
       get-matrix: ${{ steps.get-matrix.outputs.matrix }}
       issue_number: ${{ steps.get-pr-details.outputs.number }}
-    
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
@@ -58,7 +57,7 @@ jobs:
 
       - name: find average coverage
         run: |
-          echo average_coverage="average mitra apps : $(echo test))" >> $GITHUB_OUTPUT
+          echo average_coverage="average mitra apps : $(echo ${{ steps.get-coverage-average.outputs.coverage_average }}))"
         id: get-app-average-coverage
 
   test2:

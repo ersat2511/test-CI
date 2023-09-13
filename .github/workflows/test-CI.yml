@@ -61,7 +61,8 @@ jobs:
     needs: [setup,test1]
     if: ${{ always() }}
     steps:
-      - name: Create comment
+       - name: find average coverage
         run: |
-          echo 
+          echo $(cat coverage_average)
+        id: get-app-coverage-average
 

@@ -34,6 +34,9 @@ jobs:
       - name: Setup Melos and Install Dependencies
         run: dart pub global activate melos 2.9.0 && dart pub global run melos bs
       
+      - name: run test
+        run: melos test_coverage_all
+      
 
       - name: find average coverage
         run: |

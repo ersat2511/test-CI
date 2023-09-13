@@ -79,7 +79,7 @@ jobs:
         id: testing-result-comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: ${{ needs.test1.outputs.issue_number }}
+          issue-number:6
           body: |
             #Job Summary
             

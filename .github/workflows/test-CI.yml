@@ -15,6 +15,7 @@ jobs:
       flutter_path: ${{ steps.get-flutter.outputs.CACHE_PATH }}
       flutter_key: ${{ steps.get-flutter.outputs.CACHE_KEY }}
       get-matrix: ${{ steps.get-matrix.outputs.matrix }}
+      issue_number: ${{ steps.get-pr-details.outputs.number }}
     
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
@@ -36,13 +37,24 @@ jobs:
         with:
           flutter-version: ${{ needs.setup.outputs.flutter_version }}
           cache: true
+           
+      - name: Install lcov
+        uses: hrishikesh-kadam/setup-lcov@v1
             
       - name: Setup Melos and Install Dependencies
         run: dart pub global activate melos 2.9.0 && dart pub global run melos bs
       
       - name: run test
         run: melos test_coverage_all
-      
+
+      - name: run test
+        run: melos testCoverageAverage
+        id: get-coverage-average
+
+      - name: find average coverage
+        run: |
+          echo "coverage_average=$(cat coverage_average)" >> $GITHUB_OUTPUT
+        id: get-app-coverage-average
 
       - name: find average coverage
         run: |
@@ -51,12 +63,10 @@ jobs:
 
   test2:
     runs-on: ubuntu-latest
+    needs: [setup]
     if: ${{ always() }}
     steps:
-      - name: echo current running matrix --${{ join(needs.*.outputs.test, ',') }}
+      - name: Create comment
         run: |
-          echo ini adalah flavor test2 --${{ needs.test1.outputs.flavor }}
-          for test in JSON([1,2,3])
-          do
-            echo asik
-          done
+          echo 
+

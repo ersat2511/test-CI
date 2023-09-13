@@ -79,7 +79,7 @@ jobs:
         id: testing-result-comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number:6
+          issue-number: 6
           body: |
             #Job Summary
             

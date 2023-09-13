@@ -53,7 +53,7 @@ jobs:
 
       - name: find average coverage
         run: |
-          echo "coverage_average=$(cat coverage_average)" >> $GITHUB_OUTPUT
+          echo $(cat coverage_average)
         id: get-app-coverage-average
 
       - name: find average coverage

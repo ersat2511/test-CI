@@ -24,25 +24,8 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - name: define matrix
-        id: get-matrix
-        run: |
-          if [[ ${{ startsWith(steps.comment-branch.outputs.base-ref, 'main/') }} = true ]]; then
-            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
-          else
-            echo "matrix=['dev','staging','production']" >> $GITHUB_OUTPUT
-          fi
-
   test1:
-    needs: [setup]
     runs-on: ubuntu-latest
-    outputs: 
-      test: ${{ join(steps.test.outputs.*, ' ') }}
-
-    strategy:
-      matrix:
-        flavor: ${{ fromJson(needs.setup.outputs.get-matrix) }}
-
     steps:
       - uses: actions/checkout@v3
         with:

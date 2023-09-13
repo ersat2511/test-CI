@@ -1,0 +1,105 @@
+name: test-CI
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+packages:
+  - app/*
+  - modules/*
+
+ignore:
+  - 'modules/features/**/example'
+  - 'modules/utilities/**/example'
+
+scripts:
+  analyzeAll:
+    run: melos exec -- "flutter analyze --write=analyze_output ."
+    description: Run analyzer in all module
+
+  analyze: 
+    run: melos exec -- "flutter analyze --write=analyze_output ."
+    description: Run `dart analyze`
+    select-package:
+      flutter: true
+      dir-exists: lib
+
+  get:
+    run: melos exec -- "flutter packages pub get"
+    description: Run `pub get` in all package
+
+  get_select:
+    run: melos exec -- "flutter packages pub get"
+    description: Run `pub get` in selected package
+    select-package:
+      flutter: true
+      dir-exists: lib
+    
+  format: 
+    run: melos exec -- "flutter format --set-exit-if-changed ."
+    description: Run `flutter format`
+    select-package:
+      flutter: true
+      dir-exists: lib
+
+  clean:
+    run: melos exec -- "flutter clean ."
+    description: Run `flutter clean`
+    select-package:
+      flutter: true
+      dir-exists: lib
+
+  deepClean:
+    run: melos exec -- "flutter clean && rm -rf pubspec.lock ./build ./android/.gradle ./ios/.symlinks ./ios/Pods ./.dart-tool/build"
+    description: Run flutter clean and invalidate cache
+
+  cache_repair:
+    run: flutter pub cache repair
+    description: Reinstalling all packages in the system cache
+
+  apply_fix: 
+    run: melos exec -- "dart fix --dry-run"
+    description: Run `dart fix` then apply in all package
+
+  # Testing
+  test_coverage:
+    run: |
+      melos exec -- "flutter test --no-pub --coverage \
+      && lcov --ignore-errors unused,empty --extract coverage/lcov.info \
+      && genhtml --ignore-errors empty coverage/lcov.info -o coverage"
+    description: Run test coverage
+    select-package:
+      flutter: true
+      dir-exists: test
+      ignore: "*resources*"
+
+  testCoverageAverage:
+    run: |
+      for folder in $(melos list -p $list_config --dir-exists='test')
+      do
+        test=$test\ --add-tracefile\ $folder/coverage/lcov.info
+      done
+      echo average_coverage : $(lcov $test --o all_coverage.info | grep -e 'lines......' | cut -d ':' -f2 ) >> coverage_average
+    description: Run test coverage
+  
+  getCoveragePercentage:
+    run: lcov --summary ./coverage/lcov.info | grep "lines......"
+    description: get percentage coverage
+    select-package:
+      flutter: true
+      dir-exists: coverage
+    
+  test:
+    run: melos exec --fail-fast -- flutter test --no-pub
+    description: Run Flutter tests for a specific module in this project.
+    select-package:
+      flutter: true
+      dir-exists: test
+
+  # Generate Locale
+  genLocale:
+    run: melos exec "flutter pub run slang"
+    description: Generate locale in specific module
+    select-package:
+      flutter: true
+      dir-exists: lib/src/locale

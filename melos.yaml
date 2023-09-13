@@ -73,6 +73,13 @@ scripts:
       dir-exists: test
       ignore: "*resources*"
 
+  test_coverage_all:
+    run: |
+      melos exec -- "flutter test --no-pub --coverage \
+      && lcov --ignore-errors unused,empty --extract coverage/lcov.info \
+      && genhtml --ignore-errors empty coverage/lcov.info -o coverage"
+    description: Run test coverage
+
   testCoverageAverage:
     run: |
       for folder in $(melos list -p $list_config --dir-exists='test')

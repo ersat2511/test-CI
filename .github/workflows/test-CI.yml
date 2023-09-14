@@ -57,12 +57,9 @@ jobs:
       - name: run test
         run: melos test_coverage_all
 
-      - name: run test
-        run: melos testCoverageAverage
-        id: get-coverage-average
-
       - name: find average coverage
         run: |
+          melos testCoverageAverage
           echo 'coverage_average='$(cat coverage_average)'' >> $GITHUB_OUTPUT
         id: get-app-coverage-average
       
@@ -98,7 +95,7 @@ jobs:
             ```
 
             ```
-            ${{needs.test1.outputs.*}}
+            ${{ toJson(needs.test1.outputs.*) }}
 
             ```
 

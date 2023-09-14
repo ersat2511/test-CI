@@ -90,6 +90,4 @@ jobs:
             for further detail you can check this action summary
       
       - name: remove files
-        runs: rm -rf coverage_average
-
-
+        run: rm -rf coverage_average

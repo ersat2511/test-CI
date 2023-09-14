@@ -37,6 +37,10 @@ jobs:
     outputs:
       coverage_average: ${{ steps.get-app-coverage-average.outputs.coverage_average }}
       coverage_average_2: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
+      coverage_average_3: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
+      coverage_average_4: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
+      coverage_average_5: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
+      coverage_average_6: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
     steps:
       - uses: actions/checkout@v3
         with:

@@ -65,11 +65,21 @@ jobs:
           echo 'coverage_average='$(cat coverage_average)'' >> $GITHUB_OUTPUT
         id: get-app-coverage-average
 
+       - name: find average coverage
+        run: |
+          echo $(cat coverage_average)
+        id: get-app-coverage-average
+
   test2:
     runs-on: ubuntu-latest
     needs: [setup,test1]
     if: ${{ always() }}
     steps:
+      - name: find average coverage
+        run: |
+          echo $(cat coverage_average)
+        id: get-app-coverage-average
+
       - name: Create comment
         id: testing-result-comment
         uses: peter-evans/create-or-update-comment@v2

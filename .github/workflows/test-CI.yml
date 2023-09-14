@@ -36,6 +36,7 @@ jobs:
     needs: [setup]
     outputs:
       coverage_average: ${{ steps.get-app-coverage-average.outputs.coverage_average }}
+    
     steps:
       - uses: actions/checkout@v3
         with:

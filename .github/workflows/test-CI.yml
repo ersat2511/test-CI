@@ -32,11 +32,10 @@ jobs:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
   test1:
-    runs-on: ubuntu-latest
     needs: [setup]
     outputs:
       coverage_average: ${{ steps.get-app-coverage-average.outputs.coverage_average }}
-    
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:

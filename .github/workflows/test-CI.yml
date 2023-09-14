@@ -36,6 +36,7 @@ jobs:
     needs: [setup]
     outputs:
       coverage_average: ${{ steps.get-app-coverage-average.outputs.coverage_average }}
+      coverage_average_2: ${{ steps.get-app-coverage-average-2.outputs.coverage_average }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -64,6 +65,11 @@ jobs:
         run: |
           echo 'coverage_average='$(cat coverage_average)'' >> $GITHUB_OUTPUT
         id: get-app-coverage-average
+      
+      - name: find average coverage
+        run: |
+          echo "coverage_average=$(cat coverage_average)" >> $GITHUB_OUTPUT
+        id: get-app-coverage-average-2
 
   test2:
     runs-on: ubuntu-latest
@@ -85,6 +91,10 @@ jobs:
             
             ```
             ${{needs.test1.outputs.coverage_average}}
+            ```
+
+            ```
+            ${{needs.test1.outputs.coverage_average_2}}
             ```
 
             for further detail you can check this action summary

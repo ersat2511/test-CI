@@ -68,7 +68,7 @@ jobs:
        - name: find average coverage
         run: |
           echo $(cat coverage_average)
-
+          
   test2:
     runs-on: ubuntu-latest
     needs: [setup,test1]

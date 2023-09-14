@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/melos_app.iml" filepath="$PROJECT_DIR$/app/melos_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/auth_module/melos_auth_module.iml" filepath="$PROJECT_DIR$/modules/auth_module/melos_auth_module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/transaction_module/melos_transaction_module.iml" filepath="$PROJECT_DIR$/modules/transaction_module/melos_transaction_module.iml" />
       <module fileurl="file://$PROJECT_DIR$/melos_test-ci.iml" filepath="$PROJECT_DIR$/melos_test-ci.iml" />
     </modules>
   </component>

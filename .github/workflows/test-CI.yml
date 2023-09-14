@@ -97,6 +97,11 @@ jobs:
             ${{needs.test1.outputs.coverage_average_2}}
             ```
 
+            ```
+            ${{needs.test1.outputs.*}}
+
+            ```
+
             for further detail you can check this action summary
       
       - name: remove files
